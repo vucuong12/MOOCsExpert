@@ -1,19 +1,18 @@
 extends ../layouts/default
-//- block css
-//- 	link(href="/keystone/styles/content/editor.min.css", rel="stylesheet")
-//- block js
-	
-//- block content
-//- 	h1 Jade - node template engine
-//- 	#container.col
-//- 		if youAreUsingJade
-//- 			p You are amazing
-//- 		else
-//- 			p Get on it!
-//- 		p.
-//- 			Jade is a terse and simple
-//- 			templating language with a
-//- 			strong focus on performance
-//- 			and powerful features.
-//- 		p.
-//- 			haha
+block css
+	link(href="styles/landingPage.css", rel="stylesheet")
+block js
+	script(src="js/landingPage.js")
+block body
+	#body.container:.row
+		if youAreUsingJade
+			p You are amazing
+		else
+			p Get on it!
+		p.
+			Jade is a terse and simple
+			templating language with a
+			strong focus on performance
+			and powerful features.
+		p.
+			haha
