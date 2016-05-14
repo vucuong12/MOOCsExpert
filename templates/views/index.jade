@@ -1,18 +1,74 @@
 extends ../layouts/default
 block css
-	link(href="styles/landingPage.css", rel="stylesheet")
+	link(href="styles/landing.css", rel="stylesheet")
 block js
-	script(src="js/landingPage.js")
+	script(src="js/landing.js")
 block body
-	#body.container:.row
-		if youAreUsingJade
-			p You are amazing
-		else
-			p Get on it!
-		p.
-			Jade is a terse and simple
-			templating language with a
-			strong focus on performance
-			and powerful features.
-		p.
-			haha
+	#body.container-fluid:.row
+		#left-panel.col-xs-2
+			#left-part.clearfix
+				aside.category-menu
+					h4.menu-header Browser
+					hr
+					.dropdown.sources-list
+						button.btn.btn-primary.dropdown-toggle(type="button" data-toggle="dropdown") Choose Source
+						ul.dropdown-menu
+							li.menu-item
+								a(href="#") Coursera
+							li.menu-item
+								a(href="#") Udemy
+							li.menu-item
+								a(href="#") Udacity
+
+					ul.categories-list
+						hr
+						h3 Coursera
+						li.menu-item
+							a(href="#") Computer Science
+						li.menu-item
+							a(href="#") Economics
+						li.menu-item
+							a(href="#") Politics
+
+					
+		#center-panel.col-xs-7
+			#center-part.clearfix
+				form.service-select.clearfix
+					.col-xs-12
+						h4 Filter
+					.col-xs-6
+						.row
+							.col-xs-6
+								input(type="radio", name = "peopleRange", value="MyFriends")
+								| <strong> MyFriends </strong>
+							.col-xs-6
+								input(type="radio", name = "peopleRange", value="Discover")
+								| <strong> Discover </strong>
+						hr
+						.row
+							.col-xs-6
+								input(type="checkbox", name = "peopleRange", value="Posts")
+								| <strong> Posts </strong>
+							.col-xs-6
+								input(type="checkbox", name = "peopleRange", value="Challenges")
+								| <strong> Challenges </strong>
+					.col-xs-6.submit-section
+						center
+							button(type="submit")#filter-submit-button Go !
+				.newline
+				div.main-content.clearfix
+					
+					.col-xs-12.content-item
+						p How does the distressed public sight the relief? Whatever cylinder exercises underneath the center. How does a glove breeze? A feeling arm locates the guaranteed coast. A nurse impairs this crowd. The temporary radio escapes in the editorial.
+					.newline
+					.col-xs-12.content-item
+						p How does the distressed public sight the relief? Whatever cylinder exercises underneath the center. How does a glove breeze? A feeling arm locates the guaranteed coast. A nurse impairs this crowd. The temporary radio escapes in the editorial.
+					.newline
+					.col-xs-12.content-item
+						p How does the distressed public sight the relief? Whatever cylinder exercises underneath the center. How does a glove breeze? A feeling arm locates the guaranteed coast. A nurse impairs this crowd. The temporary radio escapes in the editorial.
+					.newline
+
+		#right-panel.col-xs-3
+			#right-part.clearfix
+				aside.ranking-section
+					h4.rank-header Ranking

@@ -5,7 +5,7 @@ html(lang='en')
   head
     title MoocsExpert
     meta(charset='utf-8')
-    meta(name='viewport', content='width=device-width, initial-scale=1')
+    //- meta(name='viewport', content='width=device-width, initial-scale=1')
     link(rel='stylesheet', href='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css')
     link(rel="stylesheet", href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css")
     link(rel='stylesheet', href="styles/layout.css")
@@ -17,17 +17,20 @@ html(lang='en')
         .row
           .col-xs-6
             .navbar-header
-              a.navbar-brand(href='#') MoocExpert.com
+              a.navbar-brand(href='#') MoocsExpert.com
             form.navbar-form.navbar-left(role="search")
               .form-group
                 input.form-control(type="text" placeholder="Search")
-              button.btn.btn-default(type="submit") Submit
+              button.btn.btn-default(type="submit")
+                i.fa.fa-search
           .col-xs-6
             ul.nav.navbar-nav.navbar-right
-              -var isAuthenticated = false
+              -var isAuthenticated = true
+              li
+                a(href='#', style="font-size: 18px;") New Post
               if (isAuthenticated)
                 li 
-                  a(href='#', style="font-size: 18px;") My Page
+                  a(href='#', style="font-size: 18px;") Newfeeds
                 li
                   a(href='#')
                     
@@ -44,7 +47,7 @@ html(lang='en')
     block body
 
 
-    #footer.footer
+    footer#footer.footer
       .container-fluid:.row
         .col-xs-3
         .col-xs-3
