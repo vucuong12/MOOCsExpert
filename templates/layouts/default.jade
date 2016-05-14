@@ -17,7 +17,7 @@ html(lang='en')
         .row
           .col-xs-6
             .navbar-header
-              a.navbar-brand(href='#') MoocsExpert.com
+              a.navbar-brand(href='/') MoocsExpert.com
             form.navbar-form.navbar-left(role="search")
               .form-group
                 input.form-control(type="text" placeholder="Search")
@@ -27,7 +27,7 @@ html(lang='en')
             ul.nav.navbar-nav.navbar-right
               -var isAuthenticated = true
               li
-                a(href='#', style="font-size: 18px;") New Post
+                a(href='/postCreate', style="font-size: 18px;") New Post
               if (isAuthenticated)
                 li 
                   a(href='#', style="font-size: 18px;") Newfeeds

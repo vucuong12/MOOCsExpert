@@ -1,0 +1,67 @@
+extends ../layouts/default
+block css
+  link(href="styles/postCreate.css", rel="stylesheet")
+block js
+  script(src="js/postCreate.js", type="text/javascript")
+  script(type="text/javascript", src="build/squire-raw.js")
+block body
+  #body.container-fluid:.row
+    #post-left-panel.col-xs-2
+    #post-center-panel.col-xs-8
+      center.col-xs-12
+        h4 Create Your Post
+      hr
+      #post-info-selection.col-xs-12
+        form(role="form")
+          .form-group
+            label Select Course
+            select#post-course-list.form-control
+              option.course-name(value="AI") AI
+              option.course-name(value="NLP") NPL
+            label Select Lesson
+            select#post-lesson-list.form-control
+              option.lesson-name(value="lesson 1") Lesson 1
+              option.lesson-name(value="lesson 2") Lesson 2
+            label Choose Title
+            textarea#post-title.form-control(rows="1")
+
+
+
+      #post-editor.col-xs-12
+        label Create Your New Post Here !
+        #post-menu
+          .post-group
+            .post-item#bold
+              i.fa.fa-bold
+            .post-item#italic
+              i.fa.fa-italic
+            .post-item#underline
+              i.fa.fa-underline
+            .post-item
+              i.fa.fa-font
+          .post-group
+            .post-item
+              i.fa.fa-link
+            .post-item
+              i.fa.fa-list#makeLink.prompt
+            .post-item
+              i.fa.fa-picture-o#insertImage.prompt
+            .post-item
+              i.fa.fa-quote-right#increaseQuoteLevel
+          .post-group
+            .post-item
+              i.fa.fa-header
+            .post-item
+              i.fa.fa-align-left
+            .post-item
+              i.fa.fa-align-center
+            .post-item
+              i.fa.fa-align-right
+          .post-group
+            .post-item
+              i.fa.fa-undo
+            .post-item
+              i.fa.fa-undo.flip
+        #post-main-editor
+
+    #post-right-panel.col-xs-2

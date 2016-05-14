@@ -1,0 +1,38 @@
+#post-menu {
+  text-align: center;
+
+}
+
+#post-menu .post-group {
+    border-radius: 3px;
+    display: inline-block;
+    border: 1px #EEE solid;
+    margin: 5px;
+}
+
+#post-menu .post-item {
+  color: #000;
+  float: left;
+  background: #FFF;
+  padding: 10px;
+  border-left: 1px #EEE solid;
+  border-bottom: 3px transparent solid;
+  -webkit-font-smoothing: subpixel-antialiased;
+}
+
+#post-menu .post-group .post-item:hover {
+  border-bottom: 3px #55ACEE solid;
+}
+
+#post-main-editor {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  min-height: 200px;
+  border: 1px solid #888;
+  padding: 1em;
+  background: white;
+  color: #2b2b2b;
+  font: 13px/1.35 Helvetica, arial, sans-serif;
+  cursor: text;
+}
