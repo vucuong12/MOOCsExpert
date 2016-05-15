@@ -1,67 +1,100 @@
 extends ../layouts/default
 block css
-  link(href="styles/postCreate.css", rel="stylesheet")
+	link(href="styles/postCreate.css", rel="stylesheet")
 block js
-  script(src="js/postCreate.js", type="text/javascript")
-  script(type="text/javascript", src="build/squire-raw.js")
+	script(src="js/postCreate.js", type="text/javascript")
+	script(type="text/javascript", src="build/squire-raw.js")
 block body
-  #body.container-fluid:.row
-    #post-left-panel.col-xs-2
-    #post-center-panel.col-xs-8
-      center.col-xs-12
-        h4 Create Your Post
-      hr
-      #post-info-selection.col-xs-12
-        form(role="form")
-          .form-group
-            label Select Course
-            select#post-course-list.form-control
-              option.course-name(value="AI") AI
-              option.course-name(value="NLP") NPL
-            label Select Lesson
-            select#post-lesson-list.form-control
-              option.lesson-name(value="lesson 1") Lesson 1
-              option.lesson-name(value="lesson 2") Lesson 2
-            label Choose Title
-            textarea#post-title.form-control(rows="1")
+	#body.container-fluid:.row
+		#post-left-panel.col-xs-2
+		#post-center-panel.col-xs-8
+			center.col-xs-12
+				h4 Create Your Post
+			hr
+			#post-info-selection.col-xs-12
+				form(role="form")
+					.form-group
+						label Select Course
+						select#post-course-list.form-control
+							option.course-name(value="AI") AI
+							option.course-name(value="NLP") NPL
+						label Select Lesson
+						select#post-lesson-list.form-control
+							option.lesson-name(value="lesson 1") Lesson 1
+							option.lesson-name(value="lesson 2") Lesson 2
+						label Choose Title
+						textarea#post-title.form-control(rows="1")
 
 
 
-      #post-editor.col-xs-12
-        label Create Your New Post Here !
-        #post-menu
-          .post-group
-            .post-item#bold
-              i.fa.fa-bold
-            .post-item#italic
-              i.fa.fa-italic
-            .post-item#underline
-              i.fa.fa-underline
-            .post-item
-              i.fa.fa-font
-          .post-group
-            .post-item
-              i.fa.fa-link
-            .post-item
-              i.fa.fa-list#makeLink.prompt
-            .post-item
-              i.fa.fa-picture-o#insertImage.prompt
-            .post-item
-              i.fa.fa-quote-right#increaseQuoteLevel
-          .post-group
-            .post-item
-              i.fa.fa-header
-            .post-item
-              i.fa.fa-align-left
-            .post-item
-              i.fa.fa-align-center
-            .post-item
-              i.fa.fa-align-right
-          .post-group
-            .post-item
-              i.fa.fa-undo
-            .post-item
-              i.fa.fa-undo.flip
-        #post-main-editor
+			#post-editor.col-xs-12
+				label Create Your New Post Here !
+				#post-menu
+					.post-group
+						.post-item(data-action="bold")
+							i.fa.fa-bold
+						.post-item(data-action="italic")
+							i.fa.fa-italic
+						.post-item(data-action="underline")
+							i.fa.fa-underline
+						.post-item(data-action="selectFont")#selectFont
+							a(data-placement="above",data-trigger="manual", href="#")#popover-selectFont
+								i.fa.fa-font#font-icon
+							
+						#content-selectFont(style="display:none")
+							.drop-content
+								| Text Sice: 
+								select.textSelector
+									option(data-size="12") Small
+									option(data-size="24") Medium
+									option(data-size="36") Large
+								br 
+								| Front:
+								select.fontSelect
+									option(data-fonts="georgia") Georgia
+									option(data-fonts="arial") Arial
+									option(data-fonts="helvetica, arial") Helvetica
+									option(data-fonts="menlo, consolas, courier new, monospace") Monospace
+									option(data-fonts="tahoma, sans-serif") Tahoma
+									option(data-fonts="verdana") Verdana
+						#content-selectLink(style="display:none")
+							.drop-content
+								input(placeholder="Link URL", type="text").linkUrl 
+								button.btn.submitLink Insert
+						#content-selectImage(style="display:none")
+							.drop-content
+								input(placeholder="Image URL", type="text").imageUrl 
+								button.btn.submitImage Insert
+								
+					.post-group
+						.post-item(data-action="makeLink")#selectLink
+							a(data-placement="above",data-trigger="manual", href="#")#popover-selectLink
+								i.fa.fa-link#link-icon
+						.post-item(data-action="makeOrderedList")
+							i.fa.fa-list
+						.post-item(data-action="insertImage")#selectImage
+							a(data-placement="above",data-trigger="manual", href="#")#popover-selectImage
+								i.fa.fa-picture-o#image-icon
+						.post-item(data-action="increaseQuoteLevel")
+							i.fa.fa-quote-right
+					.post-group
+						.post-item(data-action="makeHeading")
+							i.fa.fa-header
+						.post-item(data-action="alignLeft")#alignLeft.align
+							i.fa.fa-align-left
+						.post-item(data-action="alignCenter")#alignCenter.align
+							i.fa.fa-align-center
+						.post-item(data-action="alignRight")#alignRight.align
+							i.fa.fa-align-right
+					.post-group
+						.post-item(data-action="undo")
+							i.fa.fa-undo
+						.post-item(data-action="redo")
+							i.fa.fa-undo.flip
+				#post-main-editor
 
-    #post-right-panel.col-xs-2
+
+			
+
+
+		#post-right-panel.col-xs-2

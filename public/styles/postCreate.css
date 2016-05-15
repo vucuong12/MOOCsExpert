@@ -24,6 +24,10 @@
   border-bottom: 3px #55ACEE solid;
 }
 
+#post-menu .post-group .post-item.selected {
+  border-bottom: 3px red solid;
+}
+
 #post-main-editor {
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
