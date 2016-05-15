@@ -6,20 +6,21 @@ var Types = keystone.Field.Types;
  * ==========
  */
 
-var Post = new keystone.List('Post',{defaultSort: '-createdAt'});
+var Challenge = new keystone.List('Challenge',{defaultSort: '-createdAt'});
 
 //for all the information of type array, better if we store them in
 //text, then we can retrieve them and using JSON.parse to get the array later
 
-
-Post.add({
+Challenge.add({
 	cid: {type: Types.Number},
 	content: {type: Types.Text},
 	byUserId: {type: Types.Number},
-	date: {type: Types.Date},
+	openDate: {type: Types.Date},
+	expireDate:{type: Types.Date},
 	point: {type: Types.Number},
-	commentIds: {type: Types.Text},			//[]
-	relatedCourseId: {type: Types.Text},	//1 course related only for 1 post
+	commentIds: {type: Types.Number},	//[]
+	relatedCourseId: {type: Types.Text},
+	EnrollingUserIds: {type: Types.Text},  //[]
 });
 
 
@@ -28,5 +29,5 @@ Post.add({
  * Registration
  */
 
-//Post.defaultColumns = 'film_name, film_year, film_view, film_imdb';
-Post.register();
+Challenge.defaultColumns = 'id';
+Challenge.register();
