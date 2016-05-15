@@ -10,22 +10,20 @@ var keystone = require('keystone');
 // and documentation.
 
 keystone.init({
-
 	'name': 'moocsexpert',
 	'brand': 'moocsexpert',
-	
 	'less': 'public',
 	'static': 'public',
 	'favicon': 'public/favicon.ico',
 	'views': 'templates/views',
 	'view engine': 'jade',
-	
+	'cookie secret' : 'EIOJFA#%#%#',
 	'emails': 'templates/emails',
-	
 	'auto update': true,
 	'session': true,
 	'auth': true,
-	'user model': 'Y'
+	'user model': 'User'
+
 });
 
 // Load your project's Models
@@ -88,9 +86,7 @@ keystone.set('email tests', require('./routes/emails'));
 
 keystone.set('nav', {
 	'posts': ['posts', 'post-categories'],
-	'galleries': 'galleries',
-	'enquiries': 'enquiries',
-	'ys': 'ys'
+	'users': 'users'
 });
 
 // Start Keystone to connect to your database and initialise the web server
