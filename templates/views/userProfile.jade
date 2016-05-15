@@ -1,0 +1,43 @@
+extends ../layouts/default
+block css
+	link(href="styles/userProfile.css", rel="stylesheet")
+block js
+	script(src="js/userProfile.js", type="text/javascript")
+	script(type="text/javascript", src="build/squire-raw.js")
+block body
+	#profile.container:.row
+		.col-xs-12.reset-style
+			h1.page-title Profile
+		.col-xs-12.reset-style
+			form#user-profile-form(action="#", method="POST", onsubmit="onUserProfileFormSubmit").row.clear-margin
+				.col-xs-6.reset-style
+					.col-xs-6.clear-margin
+						.form-group
+							label First Name
+							input(type="text", name="firstname", value = "").form-control
+					.col-xs-6.clear-margin
+						.form-group
+							label Last Name
+							input(type="text", name="lastname", value = "").form-control
+					.col-xs-12.clear-margin
+						.form-group
+							label Email
+							input(type="email", name="email", placeholder="haha@gmail.com").form-control
+						.form-group
+							a#change-password-btn(href="#") Change Password
+						#change-password-form(style="display:none")
+							.form-group
+								label.control-label Current password
+								input(name="current-password", type="password").form-control
+							.form-group
+								label.control-label New Passowrd
+								input(name="new-password",type="password").form-control
+							.form-group
+								label.control-label Repeat Passowrd
+								input(name="repeat-password",type="password").form-control
+					.col-xs-12.clear-margin
+						.form-group
+							br
+							button#save-btn(type="submit").btn.btn-primary.btn-primary-yellow SAVE
+				.col-xs-6
+
