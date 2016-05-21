@@ -29,7 +29,7 @@ function crawlEachPage(pageNumber, callback){
   });
 }
 
-function crawl(){
+function crawl(callback){
   if (pageOrder + 1 > totalPage){
     return;
   }
@@ -67,7 +67,7 @@ function crawl(){
           request({url: syllabusUrl}, function (err, response, body) {
             // console.log("Request 1");
             if (err || response.statusCode != 200){
-              return callback("error1 " + error + " Statuscode " + response.statusCode);
+              return callback("error1 " + err + " Statuscode " + response.statusCode);
             }
             body = JSON.parse(body);
             var syllabusResults = body.results;
@@ -133,9 +133,8 @@ function crawl(){
 
           finishedPageNumber++;
           console.log('finishedPageNumber ' + finishedPageNumber + " total " + totalPage);
-          if (finishedPageNumber === pageOrder) {
+          if (finishedPageNumber === totalPage) {
             mongoose.connection.close();
-            callback();
           }
         })
     }
