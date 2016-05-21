@@ -87,12 +87,35 @@ function crawl(callback){
             //Create description
             newCourse.description = $('#desc .js-simple-collapse-inner').text().trim();
             //console.log(newCourse);
-            
-            var query = {cid:newCourse.cid, source:'Udemy'};
-            Course.findOneAndUpdate(query, newCourse, {upsert:true}, function(err, doc){
-              if (err) return console.error(err);
-              callback(err);
-            });              
+            var syllabusUrl = 'http://' + username + ':' + password + '@www.udemy.com/api-2.0/courses/' + course.id +'/public-curriculum-items/?page=1&page_size=1000';
+          
+            request({url: syllabusUrl}, function (err, response, body) {
+              // console.log("Request 1");
+              if (err || response.statusCode != 200){
+                return callback("error1 " + err + " Statuscode " + response.statusCode);
+              }
+              body = JSON.parse(body);
+              var syllabusResults = body.results;
+             
+              
+              
+
+              for (var lessonIndex in syllabusResults){
+                var lesson = syllabusResults[lessonIndex];
+                if (lesson._class == "lecture"){
+                  lessonsInfo.push(lesson.title);
+                }
+              }
+              //Create lessons
+              newCourse.lessons = JSON.stringify(lessonsInfo);
+              var query = {cid:newCourse.cid, source:'Udemy'};
+              Course.findOneAndUpdate(query, newCourse, {upsert:true}, function(err, doc){
+                if (err) return console.error(err);
+                callback(err);
+              });  
+            })
+
+                        
           })
           // var syllabusUrl = 'http://' + username + ':' + password + '@www.udemy.com/api-2.0/courses/' + course.id +'/public-curriculum-items/?page=1&page_size=1000';
           
@@ -160,6 +183,7 @@ function crawl(callback){
           console.log('finishedPageNumber ' + finishedPageNumber + " total " + totalPage);
           if (finishedPageNumber === totalPage) {
             mongoose.connection.close();
+            console.log("Done with Udemy");
           }
         })
     }
@@ -175,9 +199,6 @@ module.exports.run = function(callback){
   db.on('error', console.error.bind(console, 'connection error:'));
   db.once('open', function() {
     // we're connected!
-    
     crawl();
-    
-    
   });
 }
