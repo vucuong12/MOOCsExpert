@@ -61,68 +61,93 @@ function crawl(callback){
           newCourse.instructors = JSON.stringify(instructorInfoList);
           newCourse.isPaid = course.is_paid;
           newCourse.price = course.price;
-
-          var syllabusUrl = 'http://' + username + ':' + password + '@www.udemy.com/api-2.0/courses/' + course.id +'/public-curriculum-items/?page=1&page_size=1000';
-          
-          request({url: syllabusUrl}, function (err, response, body) {
-            // console.log("Request 1");
+          var lessonsInfo = [];
+          var categoriesInfo = [];
+          request({url: newCourse.url}, function(err, response, body){
+            // console.log("Request 2");
             if (err || response.statusCode != 200){
-              return callback("error1 " + err + " Statuscode " + response.statusCode);
+              return callback("error2 " + error + " Statuscode " + response.statusCode);
             }
-            body = JSON.parse(body);
-            var syllabusResults = body.results;
-           
-            var lessonsInfo = [];
-            var categoriesInfo = [];
-
-            for (var lessonIndex in syllabusResults){
-              var lesson = syllabusResults[lessonIndex];
-              if (lesson._class == "lecture"){
-                lessonsInfo.push(lesson.title);
-              }
-            }
-            //Create lessons
-            newCourse.lessons = JSON.stringify(lessonsInfo);
-
-            request({url: newCourse.url}, function(err, response, body){
-              // console.log("Request 2");
-              if (err || response.statusCode != 200){
-                return callback("error2 " + error + " Statuscode " + response.statusCode);
-              }
-              var $ = cheerio.load(body);
-              $('.right-middle.col-md-11.col-sm-6 li.list-item').each(function(index){
-                
-                var value = $(this).find(".list-right").text();
-                
-                if (index === 1){
-                  newCourse.duration = value.trim();
-                } else if (index === 3){
-                  newCourse.language = value.trim();
-                }
-              })
-              //Create categories
-              $('.cats a').each(function(index){
-                categoriesInfo.push($(this).text());
-              })
-              newCourse.categories = JSON.stringify(categoriesInfo);
-              //Create description
-              newCourse.description = $('#desc .js-simple-collapse-inner').text().trim();
-              //console.log(newCourse);
+            var $ = cheerio.load(body);
+            $('.right-middle.col-md-11.col-sm-6 li.list-item').each(function(index){
               
-              var query = {cid:newCourse.cid, source:'Udemy'};
-              Course.findOneAndUpdate(query, newCourse, {upsert:true}, function(err, doc){
-                if (err) return console.error(err);
-                callback(err);
-            });
-              // var myCourse = new Course(newCourse);
-              // myCourse.save(function (err, fluffy) {
-              //   if (err) return console.error(err);
-              //   callback(err);
-              // });
-
+              var value = $(this).find(".list-right").text();
               
+              if (index === 1){
+                newCourse.duration = value.trim();
+              } else if (index === 3){
+                newCourse.language = value.trim();
+              }
             })
-          });
+            //Create categories
+            $('.cats a').each(function(index){
+              categoriesInfo.push($(this).text());
+            })
+            newCourse.categories = JSON.stringify(categoriesInfo);
+            //Create description
+            newCourse.description = $('#desc .js-simple-collapse-inner').text().trim();
+            //console.log(newCourse);
+            
+            var query = {cid:newCourse.cid, source:'Udemy'};
+            Course.findOneAndUpdate(query, newCourse, {upsert:true}, function(err, doc){
+              if (err) return console.error(err);
+              callback(err);
+            });              
+          })
+          // var syllabusUrl = 'http://' + username + ':' + password + '@www.udemy.com/api-2.0/courses/' + course.id +'/public-curriculum-items/?page=1&page_size=1000';
+          
+          // request({url: syllabusUrl}, function (err, response, body) {
+          //   // console.log("Request 1");
+          //   if (err || response.statusCode != 200){
+          //     return callback("error1 " + err + " Statuscode " + response.statusCode);
+          //   }
+          //   body = JSON.parse(body);
+          //   var syllabusResults = body.results;
+           
+          //   
+          //   
+
+          //   for (var lessonIndex in syllabusResults){
+          //     var lesson = syllabusResults[lessonIndex];
+          //     if (lesson._class == "lecture"){
+          //       lessonsInfo.push(lesson.title);
+          //     }
+          //   }
+          //   //Create lessons
+          //   newCourse.lessons = JSON.stringify(lessonsInfo);
+
+          //   request({url: newCourse.url}, function(err, response, body){
+          //     // console.log("Request 2");
+          //     if (err || response.statusCode != 200){
+          //       return callback("error2 " + error + " Statuscode " + response.statusCode);
+          //     }
+          //     var $ = cheerio.load(body);
+          //     $('.right-middle.col-md-11.col-sm-6 li.list-item').each(function(index){
+                
+          //       var value = $(this).find(".list-right").text();
+                
+          //       if (index === 1){
+          //         newCourse.duration = value.trim();
+          //       } else if (index === 3){
+          //         newCourse.language = value.trim();
+          //       }
+          //     })
+          //     //Create categories
+          //     $('.cats a').each(function(index){
+          //       categoriesInfo.push($(this).text());
+          //     })
+          //     newCourse.categories = JSON.stringify(categoriesInfo);
+          //     //Create description
+          //     newCourse.description = $('#desc .js-simple-collapse-inner').text().trim();
+          //     //console.log(newCourse);
+              
+          //     var query = {cid:newCourse.cid, source:'Udemy'};
+          //     Course.findOneAndUpdate(query, newCourse, {upsert:true}, function(err, doc){
+          //       if (err) return console.error(err);
+          //       callback(err);
+          //     });              
+          //   })
+          // });
         },
         function(err){
           if (err) {
