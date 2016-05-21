@@ -8,6 +8,7 @@
     "dotenv": "^1.1.0",
     "keystone": "^0.3.16",
     "mongoose": "^4.4.17",
+    "request": "^2.72.0",
     "underscore": "^1.8.3"
   },
   "devDependencies": {
