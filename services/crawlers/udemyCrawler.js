@@ -4,14 +4,16 @@ var cheerio = require("cheerio");
 var TOTAL_COURSE = 28978;//0;
 var PAGE_SIZE = 50;
 var totalPage = Math.floor(TOTAL_COURSE / PAGE_SIZE + 1);
-var pageOrder = 0;
-var finishedPageNumber = 0;
+var pageOrder = 500;
+var finishedPageNumber = 500;
 var username = 'y7z9E7NnzXJzMMvHXi3opJReg5iLAEibmy0c7zD2',
     password = 'lA8TJhj2UO6Kf4af5ldbwnIcXPz6756FWgur1BRca3YeBMs3sFUrb0kqqEomEJ5t86jXrI1LsG80cppNiMNjoDsuM5S19MnfeZ2F8IJjaTEImuEoHsiiVoFQpCSPdX1g';
 //require('dotenv').load();
 
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://127.0.0.1/moocsexpert');
+var mongodbAdd = '52.39.232.71' || '127.0.0.1';
+console.log('Connecting to ' + mongodbAdd);
+mongoose.connect('mongodb://' + mongodbAdd + ':27017/moocsexpert');
 
 var Course = require('./models/Course')
 
@@ -66,7 +68,7 @@ function crawl(callback){
           request({url: newCourse.url}, function(err, response, body){
             // console.log("Request 2");
             if (err || response.statusCode != 200){
-              return callback("error2 " + error + " Statuscode " + response.statusCode);
+              return callback("error2 " + err + " Statuscode " + response.statusCode);
             }
             var $ = cheerio.load(body);
             $('.right-middle.col-md-11.col-sm-6 li.list-item').each(function(index){
@@ -117,66 +119,11 @@ function crawl(callback){
 
                         
           })
-          // var syllabusUrl = 'http://' + username + ':' + password + '@www.udemy.com/api-2.0/courses/' + course.id +'/public-curriculum-items/?page=1&page_size=1000';
-          
-          // request({url: syllabusUrl}, function (err, response, body) {
-          //   // console.log("Request 1");
-          //   if (err || response.statusCode != 200){
-          //     return callback("error1 " + err + " Statuscode " + response.statusCode);
-          //   }
-          //   body = JSON.parse(body);
-          //   var syllabusResults = body.results;
-           
-          //   
-          //   
-
-          //   for (var lessonIndex in syllabusResults){
-          //     var lesson = syllabusResults[lessonIndex];
-          //     if (lesson._class == "lecture"){
-          //       lessonsInfo.push(lesson.title);
-          //     }
-          //   }
-          //   //Create lessons
-          //   newCourse.lessons = JSON.stringify(lessonsInfo);
-
-          //   request({url: newCourse.url}, function(err, response, body){
-          //     // console.log("Request 2");
-          //     if (err || response.statusCode != 200){
-          //       return callback("error2 " + error + " Statuscode " + response.statusCode);
-          //     }
-          //     var $ = cheerio.load(body);
-          //     $('.right-middle.col-md-11.col-sm-6 li.list-item').each(function(index){
-                
-          //       var value = $(this).find(".list-right").text();
-                
-          //       if (index === 1){
-          //         newCourse.duration = value.trim();
-          //       } else if (index === 3){
-          //         newCourse.language = value.trim();
-          //       }
-          //     })
-          //     //Create categories
-          //     $('.cats a').each(function(index){
-          //       categoriesInfo.push($(this).text());
-          //     })
-          //     newCourse.categories = JSON.stringify(categoriesInfo);
-          //     //Create description
-          //     newCourse.description = $('#desc .js-simple-collapse-inner').text().trim();
-          //     //console.log(newCourse);
-              
-          //     var query = {cid:newCourse.cid, source:'Udemy'};
-          //     Course.findOneAndUpdate(query, newCourse, {upsert:true}, function(err, doc){
-          //       if (err) return console.error(err);
-          //       callback(err);
-          //     });              
-          //   })
-          // });
         },
         function(err){
           if (err) {
             mongoose.connection.close();
             console.log(err);
-            throw err;
           }
 
           finishedPageNumber++;
