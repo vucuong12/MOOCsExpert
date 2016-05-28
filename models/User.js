@@ -19,7 +19,7 @@ User.add({
 	name: { type: Types.Name, required: true, index: true },
 	//need some personal information
 	age: {type:Types.Number},
-	email: { type: Types.Email, initial: true, required: true, index: true },
+	email: { type: Types.Email, initial: true, required: true, index: true, unique:true },
 	password: { type: Types.Password, initial: true, required: true },	// hashed value of password using bscrypt
 	enrolledCourseIds: {type:Types.Text},	//universal ID of course that he/she are enrolling
 											//for example ["CourseraCS101","EdxMSS11"]
@@ -40,6 +40,10 @@ User.add({
 });
 
 
+User.schema.virtual('canAccessKeystone').get(function() {
+	return this.isAdmin;
+});
+
 
 /**
  * Registration
@@ -47,3 +51,23 @@ User.add({
 
 User.defaultColumns = 'username, name';
 User.register();
+
+
+// var userModel = keystone.list('User').model;
+// var user = new userModel({
+//     username: "Hoang",
+//     email: 'hoang@admin',
+//     password: 'admin',
+//     isAdmin: true,
+//     canAccessKeystone: true,
+//     name:{first:"admin",last:"user"}
+// });
+
+// user.save(function (err) {
+//     if (err) {
+//         // handle error
+//         return console.log("not ok"+err);
+//     }
+//     // user has been saved
+//     console.log("ok" + user);
+// });

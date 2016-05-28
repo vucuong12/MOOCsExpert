@@ -1,0 +1,45 @@
+extends ../../layouts/default
+
+block css
+	link(href="styles/loginnregister.css", rel="stylesheet")
+
+block prioritizedJs
+	//-google
+	script(src="js/google/google-sdk.js")
+	script(src="https://apis.google.com/js/platform.js" async defer)
+	meta(name="google-signin-client_id" content="734991380257-dqmcogsc39rt7vj12cvbgthkbaf1k72p.apps.googleusercontent.com")
+
+	//-facebook
+	script(src="js/facebook/fb_sdk.js")
+
+block bodytop
+
+
+block body
+	//- This part is for navigation login
+	//- form
+	//- 	input(type="text" placeholder="Username")
+	//- 	input(type="password" placeholder="Password")
+	//- 	input(id="rememberme" type="checkbox")
+	//- 	label(for="rememberme") Remember
+	//- 	input(type="submit" value="Login Now")
+	div(class="container")
+		div(class="col-xs-5 col-centered")
+			form(class="form-signin" action="/register" method="post")
+				h2(class="form-signin-heading") Register for Free
+				+flash-messages(messages)
+				input(type="text" id="inputEmail" name="username" class="form-control" placeholder="Username*")
+				br
+				input(type="email" id="inputEmail" name="email" class="form-control" placeholder="Email Adress*")
+				br
+				input(type="password" id="inputPassword" name="password" class="form-control" placeholder="Password*" autocomplete="on")
+				br
+				input(type="password" id="inputPassword" name="password_confirm" class="form-control" placeholder="Confirm password*" autocomplete="off")
+				br
+				button(class="btn btn-lg btn-primary btn-block" type="submit") Register
+				br
+			h4 Login with:
+			//- Google Log in - can be modify the outlook of the button
+			div(class="g-signin2" data-width="" data-onsuccess="onSignIn")
+			//-Facebook log in - can me modify the outlook of the button
+			fb:login-button(scope="public_profile,email" onlogin="checkLoginState();")

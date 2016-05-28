@@ -11,7 +11,7 @@ var Comment = new keystone.List('Comment',{defaultSort: '-createdAt'});
 //for all the information of type array, better if we store them in
 //text, then we can retrieve them and using JSON.parse to get the array later
 
-var Comment = new keystone.List('comment');
+var Comment = new keystone.List('Comment');
 
 Comment.add({
 	cid: {type: Types.Number},
