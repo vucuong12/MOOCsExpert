@@ -60,6 +60,13 @@ body {
 .clear-margin{
   margin: 0 0 0 0;
 }
+
+.flip {
+    -ms-transform: rotateY(180deg);
+    -webkit-transform: rotateY(180deg);
+    -moz-transform: rotateY(180deg);
+    transform: rotateY(180deg);
+}
   
 
 

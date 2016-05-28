@@ -39,6 +39,10 @@ User.add({
 	isAdmin: { type: Boolean, label: 'Can access Keystone', index: true }
 });
 
+User.schema.virtual('canAccessKeystone').get(function() {
+	return this.isAdmin;
+});
+
 
 User.schema.virtual('canAccessKeystone').get(function() {
 	return this.isAdmin;
@@ -53,21 +57,29 @@ User.defaultColumns = 'username, name';
 User.register();
 
 
-// var userModel = keystone.list('User').model;
-// var user = new userModel({
-//     username: "Hoang",
-//     email: 'hoang@admin',
-//     password: 'admin',
-//     isAdmin: true,
-//     canAccessKeystone: true,
-//     name:{first:"admin",last:"user"}
+// Y.add({
+// 	name: { type: Types.Name, required: true, index: true },
+// 	email: { type: Types.Email, initial: true, required: true, index: true },
+// 	password: { type: Types.Password, initial: true, required: true }
+// }, 'Permissions', {
+// 	isAdmin: { type: Boolean, label: 'Can access Keystone', index: true }
 // });
 
-// user.save(function (err) {
-//     if (err) {
-//         // handle error
-//         return console.log("not ok"+err);
-//     }
-//     // user has been saved
-//     console.log("ok" + user);
-// });
+// // Provide access to Keystone
+
+
+
+// /**
+//  * Relationships
+//  */
+
+// //Y.relationship({ ref: 'Post', path: 'posts', refPath: 'author' });
+
+
+// /**
+//  * Registration
+//  */
+
+// Y.defaultColumns = 'name, email, isAdmin';
+// Y.register();
+

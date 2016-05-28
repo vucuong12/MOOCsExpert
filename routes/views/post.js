@@ -1,5 +1,5 @@
 var keystone = require('keystone');
-
+var User = keystone.list('User');
 exports = module.exports = function(req, res) {
 	
 	var view = new keystone.View(req, res);
