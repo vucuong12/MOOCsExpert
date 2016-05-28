@@ -4,8 +4,8 @@ var cheerio = require("cheerio");
 var TOTAL_COURSE = 28978;//0;
 var PAGE_SIZE = 50;
 var totalPage = Math.floor(TOTAL_COURSE / PAGE_SIZE + 1);
-var pageOrder = 500;
-var finishedPageNumber = 500;
+var pageOrder = 485; totalPage = 500;
+var finishedPageNumber = 485;
 var username = 'y7z9E7NnzXJzMMvHXi3opJReg5iLAEibmy0c7zD2',
     password = 'lA8TJhj2UO6Kf4af5ldbwnIcXPz6756FWgur1BRca3YeBMs3sFUrb0kqqEomEJ5t86jXrI1LsG80cppNiMNjoDsuM5S19MnfeZ2F8IJjaTEImuEoHsiiVoFQpCSPdX1g';
 //require('dotenv').load();
