@@ -14,7 +14,8 @@ var courseSchema = new Schema({
   duration: {type: String},
   categories: {type: String}, //[]
   isPaid: {type: Boolean},
-  price: {type: String}
+  price: {type: String},
+  courseraType: {type: String}
 });
 var Course = mongoose.model('Course',courseSchema);
 

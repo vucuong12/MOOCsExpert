@@ -1,6 +1,4 @@
-
-
-var targetSources = ['udemy'];
+var targetSources = ['coursera'];
 var count = 0;
 for (var i in targetSources){
   var sourceName = targetSources[i];

@@ -25,7 +25,8 @@ Course.add({
 	duration: {type: Types.Text},
 	categories: {type: Types.Text}, //[]
 	isPaid: {type: Types.Boolean},
-	price: {type: Types.Text}
+	price: {type: Types.Text},
+	courseraType: {type: Types.Text}
 
 	// courseType: {type: Types.Text}, //session, ondemand... (only in Coursera)
 	// primaryLanguages: 
