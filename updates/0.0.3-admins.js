@@ -9,7 +9,7 @@
 
 // exports.create = {
 // 	User: [
-// 		{ 'name.first': 'Admin', 'name.last': 'User', email: 'admin@keystonejs.com', password: 'admin', isAdmin: true }
+// 		{ 'name.first': 'Admin', 'name.last': 'User', email: 'moocsexpert0gmail.com', password: 'cs457', isAdmin: true }
 // 	]
 // };
 
