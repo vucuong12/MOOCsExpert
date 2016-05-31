@@ -36,19 +36,18 @@ exports = module.exports = function(req, res) {
       body = JSON.parse(body);
       if (!err && response.statusCode === 200){
         var results = body.results;
-        var count = 0;
         var courseList = [];
         for (var index in results){
           var course = results[index];
-          var promise = keystone.list('Course').model.findOne({source:"Udemy", cid:course.id});
-          promise.exec(function(err, course) {
-            courseList.push(course);
-            if (++count === results.length){
-              
-              callback(null, [courseList]);  
-            }         
-          });
+          var newCourse = {
+            id: course.id,
+            smallImageUrl: course.image_240x135,
+            title: course.title,
+            source: "Udemy"
+          }
+          courseList.push(newCourse);
         }
+        callback(null, [courseList]); 
       } else {
         callback(null, []);  
       }
@@ -57,24 +56,24 @@ exports = module.exports = function(req, res) {
   }
 
   function courseraSearch(currentList, callback){
-    var url = "https://api.coursera.org/api/courses.v1?q=search&query=" + query;
+    var url = "https://api.coursera.org/api/courses.v1?q=search&fields=photoUrl&query=" + query;
     request({url: url}, function (err, response, body) {
       body = JSON.parse(body);
       if (!err && response.statusCode === 200){
         var results = body.elements;
         var courseList = [];
-        var count = 0;
         for (var index in results){
           var course = results[index];
-          var promise = keystone.list('Course').model.findOne({source:"Coursera", cid:course.id});
-          promise.exec(function(err, course) {
-            courseList.push(course);
-            if (++count === results.length){
-              currentList.push(courseList)
-              callback(null, currentList);
-            }
-          });
+          var newCourse = {
+            id: course.id,
+            smallImageUrl: course.photoUrl,
+            title: course.name,
+            source: "Coursera"
+          }
+          courseList.push(newCourse);
         }
+        currentList.push(courseList);
+        callback(null, currentList);
       } else {
         callback(null, currentList);  
       }
