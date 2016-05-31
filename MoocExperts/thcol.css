@@ -1,0 +1,109 @@
+div#news {
+    margin-left: 0px;
+    width: 350px;
+	min-height:750px;
+	border:1px solid #000;
+    background: Teal;
+	position: absolute;
+}
+div#homeFooter {
+	margin-left: 2px;
+	min-height:100px;
+	min-width:346px;
+	border:1px solid #000;	
+	top:690px;
+    background: khaki;
+	position: absolute;
+}
+div#ranking {
+    margin-left: 1550px;
+    width: 350px;
+	min-height:750px;
+	border:1px solid #000;
+    background: burlywood;
+	position: absolute;
+	
+}
+div#centre {
+	margin-left: 355px;
+    margin-right: 355px;
+	min-height:750px;
+	min-width: 1190px;
+	border:1px solid #000;
+    background: khaki;
+	position: absolute;
+}
+div#course {
+	margin-left: 355px;
+    margin-right: 1165px;
+	min-height:500px;
+	min-width:370px;
+    background: HotPink;
+	position: absolute;
+}
+div#courseExtended {
+	margin-left: 360px;
+    margin-right: 360px;
+	min-height:120px;
+	min-width:1180px;
+	border:1px solid #000;
+    background: HotPink;
+	position: relative;
+}
+div#courseFooter {
+	margin-left: 360px;
+    margin-right: 955px;
+	min-height:100px;
+	min-width:590px;
+	border:1px solid #000;	
+	top:690px;
+    background: HotPink;
+	position: absolute;
+}
+div#researchFooter {
+	margin-left: 358px;
+    margin-right: 957px;
+	min-height:100px;
+	min-width:590px;
+	border:1px solid #000;
+	top:690px;
+    background: PaleTurquoise;
+	position: absolute;
+}
+div#research {
+	margin-left: 765px;
+    margin-right: 755px;
+	min-height:500px;
+	min-width:370px;
+    background: PaleTurquoise;
+	position: absolute;
+}
+div#challengeFooter {
+	margin-left: 952px;
+    margin-right: 363px;
+	min-height:100px;
+	min-width:590px;
+	border:1px solid #000;
+	top:690px;
+    background: MediumSpringGreen;
+	position: absolute;
+}
+div#challenge {
+	margin-left: 1170px;
+    margin-right: 360px;
+	min-height:500px;
+	min-width:370px;
+	border:1px solid #000;
+    background: MediumSpringGreen;
+	position: relative;
+}
+div#researchExtended {
+	margin-left: 360px;
+    margin-right: 360px;
+	min-height:120px;
+	min-width:1180px;
+	border:1px solid #000;
+    background: PaleTurquoise;
+	position: relative;
+}
+
