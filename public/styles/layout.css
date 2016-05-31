@@ -38,13 +38,13 @@ body {
 //   }
 // }
 
-// .clearfix:after {
-//   //content: ".";
-//   // display: block;
-//   // height: 0;
-//   // clear: both;
-//   // visibility: hidden;
-// }
+.clearfix:after {
+  content: ".";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
 .content-item {
   padding-top: 10px;
   // background-color: red;

@@ -22,8 +22,8 @@ keystone.init({
 	'auto update': true,
 	'session': true,
 	'auth': true,
-	'user model': 'User'
-
+	'user model': 'User',
+	'mongo': "mongodb://" + process.env.MONGODB_ADD +"/moocsexpert"  || "mongodb://127.0.0.1/moocsexpert"
 });
 
 // Load your project's Models

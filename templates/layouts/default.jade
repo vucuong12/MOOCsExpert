@@ -20,9 +20,9 @@ html(lang='en')
           .col-xs-6
             .navbar-header
               a.navbar-brand(href='/') MoocsExpert.com
-            form.navbar-form.navbar-left(role="search")
+            form.navbar-form.navbar-left(role="search", action="/search", method="get")
               .form-group
-                input.form-control(type="text" placeholder="Search")
+                input.form-control(type="text", placeholder="Search", name="query")
               button.btn.btn-default(type="submit")
                 i.fa.fa-search
           .col-xs-6

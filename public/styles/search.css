@@ -1,0 +1,17 @@
+.course-img-wrapper {
+  float:left;
+  height: 150px;
+  width: 150px;
+  margin-right: 10px;
+}
+
+.course-img {
+  max-width: 100%;
+  max-width: 100%;
+}
+
+.course-info {
+  border-bottom-style: solid;
+  border-bottom-color: green;
+  margin-bottom: 5px;
+}

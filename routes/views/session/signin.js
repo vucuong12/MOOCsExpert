@@ -1,5 +1,5 @@
 var keystone = require('keystone'),
-	async = require('async');
+		async = require('async');
 
 exports = module.exports = function(req, res) {
 	
@@ -8,20 +8,20 @@ exports = module.exports = function(req, res) {
 	}
 	
 	var view = new keystone.View(req, res),
-		locals = res.locals;
+			locals = res.locals;
 	
 	locals.section = 'session';
 	locals.form = req.body;
 	
 	view.on('post', {}, function(next) {
-		console.log("email="+req.body.email+" pasword="+req.body.password);
+		console.log("email="+req.body.email+" password="+req.body.password);
 		if (!req.body.email || !req.body.password) {
 			req.flash('error', 'Please enter your username and password.');
 			return next();
 		}
 		
 		var onSuccess = function() {
-			res.redirect("/myprofile");
+			res.redirect("/");
 		}
 		
 		var onFail = function() {

@@ -41,9 +41,10 @@ exports = module.exports = function(app) {
 	app.all('/signin',routes.views.session.signin);
 	app.all('/register',routes.views.session.register);
 	app.get('/signout',routes.views.session.signout);
+	app.get('/search', routes.views.search)
 
 	//app.get('/blog/:category?', routes.views.blog);
-	app.get('/blog/post/:post', routes.views.post);
+	// app.get('/blog/post/:post', routes.views.post);
 
 
 	
