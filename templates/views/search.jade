@@ -15,7 +15,7 @@ block body
       #search-results.col-xs-12
         each course in results
           if (course)
-            .course-info.clearfix(onclick="location.href='#{course.url}';", style="cursor: pointer")
+            .course-info.clearfix(onclick="location.href='/course?source=#{course.source}&id=#{course.id}';", style="cursor: pointer")
               .course-img-wrapper
                 img.course-img(src="#{course.smallImageUrl}")
               h4 #{course.title}

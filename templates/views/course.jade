@@ -1,0 +1,54 @@
+extends ../layouts/default
+block css
+  link(href="styles/course.css", rel="stylesheet")
+block js
+  script(src="js/course.js", type="text/javascript")
+block body
+  script.
+    var course = !{JSON.stringify(course)};
+  #course-page.container-fluid:.row
+    #course-left-panel.col-xs-1
+    #course-center-panel.col-xs-10
+      #course-head.col-xs-12
+        h1 #{course.title}
+        | Link to the course : 
+        a(href= course.url, target="_blank") Click here
+        div
+          | Instructed by : 
+          each instructor in course.instructors
+            a(href= instructor.url !== ""? instructor.url : "#") #{instructor.name}
+        div
+          | Categories : 
+          each cate, index in course.category
+            a(href= "/search/categories?" + cate)=cate
+            if (index+1 < course.category.length)
+              | /
+      #course-des.col-xs-8
+        h3 Course Description
+
+        | #{course.description}
+
+      #course-action.col-xs-4
+        if (course.source === "Udemy")
+          if (course.isPaid)
+            span
+              h3= course.price 
+          else
+            span
+              h3 Free
+        span
+          h3=course.source
+        if (!alreadyTaken)
+          button(type="button").btn.btn-primary#take-course-btn Take this course
+          button(type="button").btn.btn-primary#challenge-course-btn Challenge your friend
+        else
+          h3 You are taking this course
+        div#course-img-wrapper
+          img#course-img(src=course.source==="Udemy"? course.bigImageUrl:course.smallImageUrl)
+        hr
+        hr
+        hr
+      
+        
+                 
+    #course-right-panel.col-xs-1

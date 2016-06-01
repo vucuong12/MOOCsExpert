@@ -11,7 +11,7 @@ var username = 'y7z9E7NnzXJzMMvHXi3opJReg5iLAEibmy0c7zD2',
 //require('dotenv').load();
 
 var mongoose = require('mongoose');
-var mongodbAdd = '52.39.232.71' || '127.0.0.1';
+var mongodbAdd = process.env.MONGODB_ADD || "127.0.0.1";
 console.log('Connecting to ' + mongodbAdd);
 mongoose.connect('mongodb://' + mongodbAdd + ':27017/moocsexpert');
 

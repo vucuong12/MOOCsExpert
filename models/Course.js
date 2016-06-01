@@ -26,52 +26,15 @@ Course.add({
 	categories: {type: Types.Text}, //[]
 	isPaid: {type: Types.Boolean},
 	price: {type: Types.Text},
-	courseraType: {type: Types.Text}
-
-	// courseType: {type: Types.Text}, //session, ondemand... (only in Coursera)
-	// primaryLanguages: 
-	// subtitleLanguages: {type:Types.Text},	// ["en",...]
-	// partnerLogo: {type:Types.Text},			//
-	// instructorIds: {type:Types.Text},		//[]
-	// partnerIds:{type:Types.Text},			//[]
-	// photoUrl:{type:Types.Text},
-	// certificates: {type:Types.Text},
-	// description: {type:Types.Text},
-	// startDate: {type:Types.Date},
-	// workload: {type:Types.Text},
-	// previewLink:{type:Types.Text},
-	// specializations: {type:Types.Text},
-	// s12nlds: {type:Types.Text}, 		//we wont use it
-	// domainTypes: {type:Types.Text},		//catagories tag for the course
-	// catagories: {type:Types.Text},		//same as domainTypes
-	// commentIds: {type:Types.Text},		//[]
-	// relatedPostIds: {type:Types.Text},	//[]
+	courseraType: {type: Types.Text},
+	category: {type: Types.TextArray}
 });
+/*
+Course.schema.add({
+	test: [{
 
-// Course.add({
-// 	cid: {type:Types.Text},	//the id is unique in system
-// 	source: {type: Types.Text},		//Example: Coursera, Edx, Udemy
-// 	slog: {type: Types.Text} ,   	//short name of the course
-// 	courseType: {type: Types.Text}, //session, ondemand... (only in Coursera)
-// 	name: {type:Types.Text},
-// 	primaryLanguages: {type:Types.Text},	//Text will be formated into JSON object "[,]"
-// 	subtitleLanguages: {type:Types.Text},	// ["en",...]
-// 	partnerLogo: {type:Types.Text},			//
-// 	instructorIds: {type:Types.Text},		//[]
-// 	partnerIds:{type:Types.Text},			//[]
-// 	photoUrl:{type:Types.Text},
-// 	certificates: {type:Types.Text},
-// 	description: {type:Types.Text},
-// 	startDate: {type:Types.Date},
-// 	workload: {type:Types.Text},
-// 	previewLink:{type:Types.Text},
-// 	specializations: {type:Types.Text},
-// 	s12nlds: {type:Types.Text}, 		//we wont use it
-// 	domainTypes: {type:Types.Text},		//catagories tag for the course
-// 	catagories: {type:Types.Text},		//same as domainTypes
-// 	commentIds: {type:Types.Text},		//[]
-// 	relatedPostIds: {type:Types.Text},	//[]
-// });
+	}]
+})*/
 
 
 

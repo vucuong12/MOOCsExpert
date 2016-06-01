@@ -13,6 +13,8 @@ html(lang='en')
     block prioritizedJs
     
   body
+    script.
+      var user = !{JSON.stringify(user)} || null;
     block bodytop
     nav#header.navbar.navbar-default.navbar-fixed-top(display="block")
       .container-fluid
