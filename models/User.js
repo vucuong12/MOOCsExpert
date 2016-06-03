@@ -34,7 +34,8 @@ User.add({
 	location: {type:Types.Text},				//name of area		
 	language: {type:Types.Text},
 	currentUniversity: {type:Types.Text},
-	myCourses: {type: Types.TextArray} 
+	myCourses: {type: Types.TextArray},
+	myPosts: {type: Types.TextArray}
 
 }, 'Permissions', {
 	isAdmin: { type: Boolean, label: 'Can access Keystone', index: true }

@@ -21,7 +21,7 @@ block body
 						select#post-course-list.form-control
 							if (courseList.length > 0)
 								each myCourse, index in courseList
-									option.course-name(value=myCourse.name, data-index=index ,data-souce=myCourse.source, data-cid=myCourse.cid)=myCourse.name 
+									option.course-name(value=myCourse.name, data-index=index ,data-source=myCourse.source, data-cid=myCourse.cid)=myCourse.name 
 							else
 								option You are not taking any course !	
 						#lessons-list
@@ -33,7 +33,7 @@ block body
 								else
 									select#post-lesson-list.form-control
 										each lesson, index in firstCourse.lessons
-											option.lesson-name(value="Lesson " + (index + 1) +": " + lesson)= "Lesson " + index +": " + lesson
+											option.lesson-name(value="Lesson " + (index + 1) +": " + lesson, data-index=index+1)= "Lesson " + (index + 1) +": " + lesson
 							
 						label Choose Title
 						textarea#post-title.form-control(rows="1")
@@ -105,6 +105,10 @@ block body
 						.post-item(data-action="redo")
 							i.fa.fa-undo.flip
 				#post-main-editor
+
+				center
+					#submit-btn.btn-primary.btn Save
+
 
 
 			

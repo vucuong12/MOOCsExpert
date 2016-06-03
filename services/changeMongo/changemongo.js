@@ -10,7 +10,7 @@ var timeout = 0;
 var count = 0;
 
 var mongoose = require('mongoose');
-var mongodbAdd = process.env.MONGODB_ADD || "127.0.0.1";
+var mongodbAdd = "52.39.232.71" || "127.0.0.1";
 mongoose.connect('mongodb://' + mongodbAdd + ':27017/moocsexpert');
 console.log(mongodbAdd);
 var Course = require('../crawlers/models/Course');

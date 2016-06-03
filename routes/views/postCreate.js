@@ -37,7 +37,7 @@ exports = module.exports = function(req, res) {
             myCourse.lessons = [];
           } 
           if (myCourse.selected){
-            locals.couresList.unshift(myCourse);
+            locals.courseList.unshift(myCourse);
           } else{
             locals.courseList.push(myCourse);  
           }

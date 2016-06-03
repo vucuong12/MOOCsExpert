@@ -1,8 +1,48 @@
+var editor;//global value
+
+$("#submit-btn").click(function(){
+  var source = $("#post-course-list").find(":selected").data("source");
+  var cid = $("#post-course-list").find(":selected").data("cid");;
+  var lessonIndex, lessonName;
+  if (courseList.length === 0){
+    lessonName = $("#lesson-input").text();
+    if (!lessonName || lessonName === "") {
+      alert("Please enter related lesson :) ");
+      return;
+    }
+  } else {
+    lessonIndex = $("#post-lesson-list").find(":selected").data("index");
+    lessonName = $("#post-lesson-list").find(":selected").text();
+  }
+  var title = $("#post-title").val();
+  if (!title || title === ""){
+    alert("Please enter the title for the post :)");
+    return;
+  }
+  var content = editor.getHTML();
+  //Send AJAX to server
+  var data = {
+    source: source,
+    cid: cid,
+    lessonIndex: lessonIndex,
+    lessonName: lessonName,
+    content: content,
+    title: title
+  }
+  
+  post("/post/create", data, function(data){
+    if (data.success === true) {
+      //window.location.href = "/postCreate";
+    } else {
+      alert("Error while creating new post, try again !");
+    }
+  });
+})
+
 $('#post-course-list').on('change', function() {
   if (courseList.length === 0) return;
   var index = $(this).find(":selected").data("index");
   var lessons = courseList[index].lessons;
-  console.log("DM");
   $("#lessons-list").empty();
   var $label = $("<label>", {text: "Select Lesson"});
   $("#lessons-list").append($label);
@@ -13,7 +53,8 @@ $('#post-course-list').on('change', function() {
     var $select = $("<select>", {id:"post-lesson-list", class:"form-control"});
     for (var index in lessons){
       var lesson = lessons[index];
-      var $option = $("<option>", {class:"lesson-name", value: "Lesson " + index +": " + lesson, text: "Lesson " + index +": " + lesson});
+      var idx = parseInt(index) + 1;
+      var $option = $("<option>", {class:"lesson-name", value: "Lesson " + idx +": " + lesson, text: "Lesson " + idx +": " + lesson});
       $select.append($option);
     }
     $("#lessons-list").append($select);
@@ -22,15 +63,12 @@ $('#post-course-list').on('change', function() {
 });
 
 $(document).ready(function() {
-  var editor; //global value
+   
   //add new function to Squire
   Squire.prototype.testPresenceinSelection = function(name, action, format,
     validation) {
     var path = this.getPath(),
         test = (validation.test(path) | this.hasFormat(format));
-    // console.log("path"); console.log(path);
-    // console.log("hasFormat"); console.log(this.hasFormat(format));
-    // console.log("----------------");
     if (name == action && test) {
       return true;
     } else {
@@ -109,12 +147,6 @@ $(document).ready(function() {
     }
   })
 
-  // $('#popover-selectFont').popover({ 
-  //   html : true,
-  //   content: function() {
-  //     return $('#content-selectFont').html();
-  //   }
-  // });
   $('.post-item a').click(function(event){
     event.preventDefault();
     
@@ -149,7 +181,6 @@ $(document).ready(function() {
 
   $(document).on("click", "#selectFont select.fontSelect", function(event){
     var selectedFonts = $(this).children(":selected").data('fonts');
-    console.log("asdfasdf " + selectedFonts);
     try {
       editor.setFontFace(selectedFonts);
     } catch (e) {
@@ -165,7 +196,6 @@ $(document).ready(function() {
     
     event.stopPropagation();
     var fontSize =  $(this).children(":selected").data('size') + 'px';
-    console.log("fontsize = " + fontSize);
     editor.setFontSize(fontSize);
   });
 
@@ -194,7 +224,6 @@ $(document).ready(function() {
     
     event.stopPropagation();
     var linkUrl =  $("#selectLink input").val();
-    console.log("linkUrl = " + linkUrl);
     editor.makeLink(linkUrl);
   });
 
@@ -209,7 +238,6 @@ $(document).ready(function() {
                 '<button type="button" id="close" class="close" onclick="$(&quot;#popover-selectImage&quot;).popover(&quot;toggle&quot;);">&times;</button>',
       content: function() {
         var html =  $('#content-selectImage').html();
-        //$( "#content-selectFont" ).remove();
         return html;
       }
       
