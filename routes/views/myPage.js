@@ -21,6 +21,7 @@ exports = module.exports  = function(req, res){
         }
         var promise1 = keystone.list("Course").model.findOne(query);
         promise1.lean().exec(function(err, course){
+          course.postIds = myCourse.postIds;
           locals.courseList.push(course);  
           callback(err);
         })

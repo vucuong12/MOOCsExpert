@@ -7,17 +7,31 @@ block body
   script.
     var courseList = !{JSON.stringify(courseList)};
   #myPage-page.container-fluid:.row
-    #myPage-left-panel.col-xs-1
-    #myPage-center-panel.col-xs-10
-      each course in courseList
-        .myPage-course.clearfix.fixed-box
-          .course-title(data-url = "/course?source=" + course.source + "&id=" + course.cid)= course.title + " - " + course.source
-          hr
-          .col-xs-6
-            label Number of Posts: 
-            | 0
-          .col-xs-6
-            label Number of Challenges: 
-            | 0
-          hr
-    #myPage-right-panel.col-xs-1
+    #myPage-left-panel.col-xs-2
+    #myPage-center-panel.col-xs-8
+      center
+        h1 My Page
+      .profile-button
+        a(href="/userProfile") View your profile
+      .courseList
+        each course in courseList
+          .myPage-course.clearfix.fixed-box
+            center
+              .course-title(data-url = "/course?source=" + course.source + "&id=" + course.cid)= course.title + " - " + course.source
+            .col-xs-6
+              center
+                label(style="padding-top:10px;") Number of Posts: 
+                | #{course.postIds.length}
+            .col-xs-6
+              center
+                label(style="padding-top:10px;") Number of Challenges: 
+                | 0
+            hr
+            .col-xs-12
+              h3 Posts
+                - var count = 0;
+                each postId in course.postIds
+                  a(href="/post?postId="+postId)= "Post " + (++count)
+            .col-xs-12
+              h3 Challenges
+    #myPage-right-panel.col-xs-2

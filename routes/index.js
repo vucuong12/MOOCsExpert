@@ -47,6 +47,8 @@ exports = module.exports = function(app) {
 	app.post('/update/takecourse', routes.apis.update.takeCourse);
 	app.get('/myPage', routes.views.myPage);
 	app.get('/newfeeds',routes.views.social.newfeeds);
+	app.post('/post/create', routes.apis.post.create);
+	app.get('/post', routes.views.post.view);
 
 
 

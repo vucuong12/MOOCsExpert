@@ -1,48 +1,47 @@
 var keystone = require('keystone');
-var User = keystone.list('User');
-exports = module.exports = function(req, res) {
-	
-	var view = new keystone.View(req, res);
-	var locals = res.locals;
-	locals.user = req.user || null;
-	
-	// Set locals
-	locals.section = 'blog';
-	locals.filters = {
-		post: req.params.post
-	};
-	locals.data = {
-		posts: []
-	};
-	
-	// Load the current post
-	view.on('init', function(next) {
-		
-		var q = keystone.list('Post').model.findOne({
-			state: 'published',
-			slug: locals.filters.post
-		}).populate('author categories');
-		
-		q.exec(function(err, result) {
-			locals.data.post = result;
-			next(err);
-		});
-		
-	});
-	
-	// Load other posts
-	view.on('init', function(next) {
-		
-		var q = keystone.list('Post').model.find().where('state', 'published').sort('-publishedDate').populate('author').limit('4');
-		
-		q.exec(function(err, results) {
-			locals.data.posts = results;
-			next(err);
-		});
-		
-	});
-	
-	// Render the view
-	view.render('post');
-	
-};
+var request = require('request');
+var async = require('async');
+
+
+module.exports = {
+
+  view: function (req, res) {
+    if (!req.user){
+      return res.redirect("/signin");
+    }
+    var view = new keystone.View(req, res);
+    var locals = res.locals;
+    var user = req.user;
+    var postId = req.query.postId;
+
+    view.on("init", function(next){
+    	async.waterfall([
+	      //create a new post instance from Post model
+	      function(callback){
+	        keystone.list("MyPost").model.findOne({_id: postId}).lean().exec(function(err, myPost){
+	        	if (err){
+	        		console.error(err);
+	        	}
+	        	locals.myPost = myPost;
+	        	console.log(locals.myPost);
+	        	callback(err, myPost);
+	        })
+
+	      },
+	      //update postIds in user
+	      function(myPostId, callback){
+	        keystone.list("User").model.findOne({_id: user._id}, function(err, user){
+	          callback(err);
+	        });
+	        
+	      }
+	    ],
+	    function(err){
+	      next();
+	    })
+    })
+
+    
+    view.render("post");
+  }
+}
