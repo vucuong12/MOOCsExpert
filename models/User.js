@@ -15,7 +15,7 @@ var User = new keystone.List('User');
 
 User.add({
 	username: {type: Types.Text, required: true, default:"noname", index:true},
-	cid: {type:Types.Number},
+	cid: {type:Types.Text},
 	name: { type: Types.Name, required: true, index: true },
 	//need some personal information
 	age: {type:Types.Number},

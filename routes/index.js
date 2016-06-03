@@ -45,9 +45,10 @@ exports = module.exports = function(app) {
 	app.get('/search', routes.views.search);
 	app.get('/course', routes.views.course);
 	app.post('/update/takecourse', routes.apis.update.takeCourse);
+	app.get('/newfeeds',routes.views.social.newfeeds);
+	//app.get('/user/:username',routes.views.userpage);
+	//app.get('/user/:username/post/:postid',routes.view.post);
 
-	//app.get('/blog/:category?', routes.views.blog);
-	// app.get('/blog/post/:post', routes.views.post);
 
 
 	
