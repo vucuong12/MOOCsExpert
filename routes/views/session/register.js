@@ -36,7 +36,8 @@ exports = module.exports = function(req, res) {
 				var userData = {
 					email: req.body.email,
 					password: req.body.password,
-					username: req.body.username
+					username: req.body.username,
+					cid: req.body.username
 				};
 				
 				var User = keystone.list('User').model,
