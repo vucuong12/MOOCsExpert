@@ -1,3 +1,26 @@
+$('#post-course-list').on('change', function() {
+  if (courseList.length === 0) return;
+  var index = $(this).find(":selected").data("index");
+  var lessons = courseList[index].lessons;
+  console.log("DM");
+  $("#lessons-list").empty();
+  var $label = $("<label>", {text: "Select Lesson"});
+  $("#lessons-list").append($label);
+  if (lessons.length === 0){
+    var $input = $("<input>", {id:"lesson-input", type:"text", placeholder:"Enter related lesson"});
+    $("#lessons-list").append($input);
+  } else {
+    var $select = $("<select>", {id:"post-lesson-list", class:"form-control"});
+    for (var index in lessons){
+      var lesson = lessons[index];
+      var $option = $("<option>", {class:"lesson-name", value: "Lesson " + index +": " + lesson, text: "Lesson " + index +": " + lesson});
+      $select.append($option);
+    }
+    $("#lessons-list").append($select);
+  }
+
+});
+
 $(document).ready(function() {
   var editor; //global value
   //add new function to Squire
@@ -102,9 +125,6 @@ $(document).ready(function() {
     
   })
 
-
-  
-
   $("#selectFont").click(function(event){
     if (event.target !== document.getElementById("selectFont") && event.target !== document.getElementById("font-icon")){
       return;
@@ -179,11 +199,10 @@ $(document).ready(function() {
   });
 
   $("#selectImage").click(function(event){
-    console.log(1);
     if (event.target !== document.getElementById("selectImage") && event.target !== document.getElementById("image-icon")){
       return;
     }
-    console.log(2);
+
     $('#popover-selectImage').popover({ 
       html : true,
       title : '<span class="text-info"><strong>Insert Image</strong></span>'+
@@ -205,12 +224,7 @@ $(document).ready(function() {
     
     event.stopPropagation();
     var imageUrl =  $("#selectImage input").val();
-    console.log("imageUrl = " + imageUrl);
     editor.insertImage(imageUrl);
   });
-
-  
-
-  
-
 })
+

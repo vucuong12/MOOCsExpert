@@ -43,6 +43,10 @@ $("#take-course-btn").click(function(){
   })
 })
 
+$("#create-post-btn").click(function(){
+  window.location.href = "/postCreate?source=" + course.source + "&cid=" + course.cid;
+})
+
 $(document).ready(function() {
 
 })

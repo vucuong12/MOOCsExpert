@@ -1,0 +1,23 @@
+extends ../layouts/default
+block css
+  link(href="styles/myPage.css", rel="stylesheet")
+block js
+  script(src="js/myPage.js", type="text/javascript")
+block body
+  script.
+    var courseList = !{JSON.stringify(courseList)};
+  #myPage-page.container-fluid:.row
+    #myPage-left-panel.col-xs-1
+    #myPage-center-panel.col-xs-10
+      each course in courseList
+        .myPage-course.clearfix.fixed-box
+          .course-title(data-url = "/course?source=" + course.source + "&id=" + course.cid)= course.title + " - " + course.source
+          hr
+          .col-xs-6
+            label Number of Posts: 
+            | 0
+          .col-xs-6
+            label Number of Challenges: 
+            | 0
+          hr
+    #myPage-right-panel.col-xs-1

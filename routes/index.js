@@ -45,6 +45,7 @@ exports = module.exports = function(app) {
 	app.get('/search', routes.views.search);
 	app.get('/course', routes.views.course);
 	app.post('/update/takecourse', routes.apis.update.takeCourse);
+	app.get('/myPage', routes.views.myPage);
 
 	//app.get('/blog/:category?', routes.views.blog);
 	// app.get('/blog/post/:post', routes.views.post);

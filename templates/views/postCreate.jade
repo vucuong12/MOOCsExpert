@@ -5,6 +5,8 @@ block js
 	script(src="js/postCreate.js", type="text/javascript")
 	script(type="text/javascript", src="build/squire-raw.js")
 block body
+	script.
+		var courseList = !{JSON.stringify(courseList)}
 	#body.container-fluid:.row
 		#post-left-panel.col-xs-2
 		#post-center-panel.col-xs-8
@@ -15,13 +17,24 @@ block body
 				form(role="form")
 					.form-group
 						label Select Course
+
 						select#post-course-list.form-control
-							option.course-name(value="AI") AI
-							option.course-name(value="NLP") NPL
-						label Select Lesson
-						select#post-lesson-list.form-control
-							option.lesson-name(value="lesson 1") Lesson 1
-							option.lesson-name(value="lesson 2") Lesson 2
+							if (courseList.length > 0)
+								each myCourse, index in courseList
+									option.course-name(value=myCourse.name, data-index=index ,data-souce=myCourse.source, data-cid=myCourse.cid)=myCourse.name 
+							else
+								option You are not taking any course !	
+						#lessons-list
+							if (courseList.length > 0)
+								label Select Lesson
+								- var firstCourse = courseList[0];
+								if (firstCourse.lessons.length === 0)
+									input(type="text", placeholder="Enter related lesson")#lesson-input
+								else
+									select#post-lesson-list.form-control
+										each lesson, index in firstCourse.lessons
+											option.lesson-name(value="Lesson " + (index + 1) +": " + lesson)= "Lesson " + index +": " + lesson
+							
 						label Choose Title
 						textarea#post-title.form-control(rows="1")
 
