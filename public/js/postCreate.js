@@ -2,7 +2,8 @@ var editor;//global value
 
 $("#submit-btn").click(function(){
   var source = $("#post-course-list").find(":selected").data("source");
-  var cid = $("#post-course-list").find(":selected").data("cid");;
+  var cid = $("#post-course-list").find(":selected").data("cid");
+  var courseTitle = $("#post-course-list").find(":selected").val();
   var lessonIndex, lessonName;
   if (courseList.length === 0){
     lessonName = $("#lesson-input").text();
@@ -27,12 +28,13 @@ $("#submit-btn").click(function(){
     lessonIndex: lessonIndex,
     lessonName: lessonName,
     content: content,
-    title: title
+    title: title,
+    courseTitle: courseTitle
   }
   
   post("/post/create", data, function(data){
     if (data.success === true) {
-      //window.location.href = "/postCreate";
+      window.location.href = "/post?postId=" + data.myPostId;
     } else {
       alert("Error while creating new post, try again !");
     }
