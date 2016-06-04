@@ -23,7 +23,6 @@ module.exports = {
 	        		console.error(err);
 	        	}
 	        	locals.myPost = myPost;
-	        	console.log(locals.myPost);
 	        	callback(err, myPost);
 	        })
 

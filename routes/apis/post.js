@@ -17,13 +17,15 @@ module.exports = {
     var lessonName = req.body.lessonName;
     var title = req.body.title;
     var content = req.body.content;
+    var courseTitle = req.body.courseTitle;
 
     async.waterfall([
-      //create a new post instance from Post model
+      //create a new post instance from MyPost model
       function(callback){
         var newMyPost = new MyPost.model({
           userId : user._id,
           source : source,
+          courseTitle: courseTitle,
           cid : cid,
           lessonIndex: lessonIndex,
           lessonName: lessonName,
@@ -62,16 +64,13 @@ module.exports = {
           currentMyPosts.push(myPostId);
           myCourse.postIds = currentMyPosts;
           myCourse.save(function(err){
-            callback(err)
+            callback(err, myPostId)
           })
         });
       }
     ],
-    function(err){
-      res.json({success: true})
-    })
-
-    
-    
+    function(err, myPostId){
+      res.json({success: true, myPostId: myPostId})
+    }) 
   }
 }

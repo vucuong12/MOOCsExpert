@@ -20,18 +20,23 @@ block body
               .course-title(data-url = "/course?source=" + course.source + "&id=" + course.cid)= course.title + " - " + course.source
             .col-xs-6
               center
-                label(style="padding-top:10px;") Number of Posts: 
-                | #{course.postIds.length}
+                label(style="padding-top:10px;") Number of Posts : 
+                | #{course.myPosts.length}
             .col-xs-6
               center
-                label(style="padding-top:10px;") Number of Challenges: 
+                label(style="padding-top:10px;") Number of Challenges : 
                 | 0
             hr
             .col-xs-12
               h3 Posts
-                - var count = 0;
-                each postId in course.postIds
-                  a(href="/post?postId="+postId)= "Post " + (++count)
+              - var count = 0;
+              each myPost,index in course.myPosts
+                .col-xs-4(class="myPage-post" class= index === (course.myPosts.length - 1) || index % 3 === 2? "myPage-post-right": "" class= index === (course.myPosts.length - 1) || index + 1 > (course.myPosts.length - (course.myPosts.length - 1) % 3 - 1) || index + 4 > (course.myPosts.length)? "myPage-post-bottom": "", data-postId=myPost._id)
+                  a(href="/post?postId="+myPost._id).inline-ele
+                    h4.inline-ele(style="color: black") <strong> #{myPost.title} </strong>
+                  button(data-postid=myPost._id + "").btn.primary-btn.view-btn View
+                  h5 <strong>Course </strong>: #{myPost.courseTitle}
+                  | <strong>Created at </strong>: #{myPost._.createdAt.format('YYYY-MM-DD')}  
             .col-xs-12
               h3 Challenges
     #myPage-right-panel.col-xs-2
