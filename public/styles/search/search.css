@@ -15,3 +15,12 @@
   border-bottom-color: green;
   margin-bottom: 5px;
 }
+
+.pageLink {
+  margin-left: 15px;
+}
+
+#search-panigation {
+  margin-top: 20px;
+  font-size: 30px;
+}

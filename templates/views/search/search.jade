@@ -1,0 +1,43 @@
+extends ../../layouts/default
+block css
+  link(href="/styles/search/search.css", rel="stylesheet")
+block js
+  script(src="/js/search/search.js", type="text/javascript")
+block body
+  #search-page.container-fluid:.row
+    #search-left-panel.col-xs-2
+    #search-center-panel.col-xs-8
+      center.col-xs-12
+        if (type=="normalSearch")
+          h1 Search Result for query: "#{query}"
+        else if (type=="categorySearch")
+          h1 Search Result for category: "#{category}"
+
+      hr
+      hr
+      hr
+      - category = encodeURIComponent(category);
+      #search-results.col-xs-12
+        each course in results
+          if (course)
+            .course-info.clearfix(onclick="location.href='/course?source=#{course.source}&id=#{course.cid}';", style="cursor: pointer")
+              .course-img-wrapper
+                img.course-img(src="#{course.smallImageUrl}")
+              h4 #{course.title}
+              i #{course.source}
+
+      #search-panigation.col-xs-12
+        - page = parseInt(page);
+        if (type=="categorySearch" && results.length > 0)
+          center
+            if (page > 0)
+              a(href="/search/categories?source=" + source +"&category=" + category + "&page=0").pageLink
+                <i class="fa fa-angle-double-left" style="font-size:30px"></i>
+         
+              a(href="/search/categories?source=" + source +"&category=" + category + "&page=" + (page-1)).pageLink
+                <i class="fa fa-angle-left" style="font-size:30px"></i>
+            span.pageLink= page
+            a(href="/search/categories?source=" + source +"&category=" + category + "&page=" + (page + 1)).pageLink
+              <i class="fa fa-angle-right" style="font-size:30px"></i>
+                 
+    #search-right-panel.col-xs-2
