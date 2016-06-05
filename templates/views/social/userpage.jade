@@ -1,0 +1,61 @@
+extends ../../layouts/default
+
+block css
+  link(href="/styles/post.css", rel="stylesheet")
+
+block js
+  script(src="/js/follow.js", type="text/javascript")
+
+mixin post(index,post)
+  .container-fluid:.row
+    .col-xs-1
+    .col-xs-10
+      h3= post.title
+      hr.thick-hr
+      .col-xs-9
+        .col-xs-1.no-float
+          .upvote-btn
+            <i class="fa fa-caret-up" style="font-size:40px"></i>
+          .vote-number(style="padding-left:3px")= 12
+          .downvote-btn
+            <i class="fa fa-caret-down" style="font-size:40px"></i>
+        .col-xs-11.no-float #{post.content}
+        
+      .col-xs-3
+        h5 created at: #{post._.createdAt.format('YYYY-MM-DD')}
+        | author: 
+        a(href="/user/"+data.targetUser.username) #{data.targetUser.username}
+        if post.courseTitle
+          p.small
+            | About Course 
+            a(href="/course?source="+post.source+"&id="+post.cid)=post.courseTitle
+          if post.lessionName
+            |, in section
+            a(href="/course?source="+post.source+"&id="+post.cid)=post.lessionNumber+post.lessionName
+    .col-xs-1
+
+block body
+  .container-fluid
+    .row
+      .col-xs-2
+      .col-xs-8
+        center
+          .row
+            h2 User 
+              strong #{data.targetUser.username}
+          .row
+            if (data.alreadyFollowing==false)
+              button(type="button" class="btn btn-primary" id="follow-button" onclick="followUser()") Follow
+            else 
+              button(type="button" class="btn btn-warning" id="unfollow-button" onclick="unFollowUser()") Unfollow
+            button(type="button" class="btn btn-info" id="follow-button") Message
+        .container
+          .row
+            .col-xs-8
+              each post,index in data.posts
+                  +post(index,post)
+            .col-xs-4
+              h3 Course Enrolling
+              each course in data.courses
+                .row
+                  a(href="/course?source="+course.source+"&id="+course.cid)=course.title

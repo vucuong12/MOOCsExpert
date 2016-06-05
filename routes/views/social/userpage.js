@@ -1,5 +1,6 @@
 var keystone = require('keystone');
 var User = keystone.list('User');
+var async = require('async');
 exports = module.exports = function(req, res) {
 	
 	var view = new keystone.View(req, res);
@@ -7,42 +8,80 @@ exports = module.exports = function(req, res) {
 	locals.user = req.user || null;
 	
 	// Set locals
-	locals.section = 'blog';
-	locals.filters = {
-		post: req.params.post
-	};
+	locals.section = 'userpage';
 	locals.data = {
-		posts: []
+		posts: [],
+		postAuthors: [],
+		targetUser: null,
+		myCourses: [],
+		courses: [],
+		alreadyFollowing: false,
 	};
-	
-	// Load the current post
-	view.on('init', function(next) {
-		
-		var q = keystone.list('Post').model.findOne({
-			state: 'published',
-			slug: locals.filters.post
-		}).populate('author categories');
-		
-		q.exec(function(err, result) {
-			locals.data.post = result;
-			next(err);
+
+	//get the user
+	view.on('init',function(next){
+		//console.log(req.params.username);
+		keystone.list('User').model.findOne({
+			username: req.params.username
+		}).exec(function(err,res_user){
+			locals.data.targetUser=res_user;
+			next();
 		});
-		
 	});
-	
-	// Load other posts
-	view.on('init', function(next) {
-		
-		var q = keystone.list('Post').model.find().where('state', 'published').sort('-publishedDate').populate('author').limit('4');
-		
-		q.exec(function(err, results) {
-			locals.data.posts = results;
-			next(err);
+
+	//check if no user and check if friend
+	view.on('init',function(next){
+		if (!locals.data.targetUser)
+			res.redirect('/404-no-user');
+		//check if following already
+		if ((locals.user.followingPeopleIds.indexOf(locals.data.targetUser._id)>-1)  || locals.user._id.equals(locals.data.targetUser._id) ){
+			locals.data.alreadyFollowing=true;
+		}
+		next();
+	});
+
+	//load all the posts
+	view.on('init',function(next){
+		keystone.list('MyPost').model.find({
+			userId:locals.data.targetUser._id
+		}).exec(function(err,posts_res){
+			locals.data.posts=(posts_res || []);
+			async.forEachOf(locals.data.posts,function(post,index,cb){
+				keystone.list('User').model.findOne({
+					_id: post.userId
+				}).exec(function(err,myUser){
+					locals.data.postAuthors[index]=myUser;
+					cb();
+				});
+			},function(err){
+				next(err);
+			});
 		});
-		
 	});
+
+	//load all the myCourses
+	view.on('init',function(next){
+		keystone.list('MyCourse').model.find({
+			userId:locals.data.targetUser._id
+		}).limit(10).exec(function(err,list_myCourses){
+			locals.data.myCourses=list_myCourses;
+			async.forEachOf(locals.data.myCourses,function(myCourse,index,cb){
+				keystone.list('Course').model.findOne({
+					cid: myCourse.cid,
+					source: myCourse.source
+				}).exec(function(err,course){
+					locals.data.courses[index]=course;
+					cb();
+				});
+			},function(err){
+				next(err);
+			});
+		});
+	});
+
+
 	
 	// Render the view
-	view.render('post');
+	view.render('social/userpage');
 	
 };

@@ -3,6 +3,26 @@ block css
 	link(href="styles/landing.css", rel="stylesheet")
 block js
 	script(src="js/landing.js")
+
+
+mixin post(post)
+	.col-xs-7.content-item.post(data-ks-editable=editable(user, { list: 'Post', id: post.id }))
+		p!= post.content
+		p.small.text-muted 
+			if post.date
+				| #{post._.date.format('MMMM Do, YYYY')} 
+			if post.byUserId
+				| by 
+				a(href="/user/"+post.byUserId)=post.byUserId
+		if post.relatedCourseId
+			p.small
+				| About Course 
+				a(href="/course/"+post.relatedCourseId)=post.relatedCourseId
+			if post.relatedLessionId
+				| in 
+				a(href="/course/"+post.relatedLessionId)=post.relatedLessionId
+		br
+
 block body
 	#body.container-fluid:.row
 		#left-panel.col-xs-2
@@ -48,16 +68,19 @@ block body
 							button(type="submit")#filter-submit-button Go !
 				.newline
 				div.main-content.clearfix
-					
-					.col-xs-12.content-item
-						p How does the distressed public sight the relief? Whatever cylinder exercises underneath the center. How does a glove breeze? A feeling arm locates the guaranteed coast. A nurse impairs this crowd. The temporary radio escapes in the editorial.
-					.newline
-					.col-xs-12.content-item
-						p How does the distressed public sight the relief? Whatever cylinder exercises underneath the center. How does a glove breeze? A feeling arm locates the guaranteed coast. A nurse impairs this crowd. The temporary radio escapes in the editorial.
-					.newline
-					.col-xs-12.content-item
-						p How does the distressed public sight the relief? Whatever cylinder exercises underneath the center. How does a glove breeze? A feeling arm locates the guaranteed coast. A nurse impairs this crowd. The temporary radio escapes in the editorial.
-					.newline
+					if !user
+						.col-xs-12.content-item
+							p How does the distressed public sight the relief? Whatever cylinder exercises underneath the center. How does a glove breeze? A feeling arm locates the guaranteed coast. A nurse impairs this crowd. The temporary radio escapes in the editorial.
+						.newline
+						.col-xs-12.content-item
+							p How does the distressed public sight the relief? Whatever cylinder exercises underneath the center. How does a glove breeze? A feeling arm locates the guaranteed coast. A nurse impairs this crowd. The temporary radio escapes in the editorial.
+						.newline
+						.col-xs-12.content-item
+							p How does the distressed public sight the relief? Whatever cylinder exercises underneath the center. How does a glove breeze? A feeling arm locates the guaranteed coast. A nurse impairs this crowd. The temporary radio escapes in the editorial.
+						.newline
+					else
+						each post in data.posts
+							+post(post)
 
 		#right-panel.col-xs-3
 			#right-part.clearfix

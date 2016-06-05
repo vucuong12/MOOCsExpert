@@ -38,19 +38,29 @@ exports = module.exports = function(app) {
 	// Views
 	app.get('/', routes.views.index);
 	app.get('/postCreate', routes.views.postCreate);
-	app.get('/userProfile', routes.views.userProfile);
+	
 	app.all('/signin',routes.views.session.signin);
 	app.all('/register',routes.views.session.register);
 	app.get('/signout',routes.views.session.signout);
 	app.get('/search', routes.views.search.search);
 	app.get('/course', routes.views.course);
 	app.post('/update/takecourse', routes.apis.update.takeCourse);
+	
+	//user custom page
+	app.get('/userProfile', routes.views.userProfile);
 	app.get('/myPage', routes.views.myPage);
-	app.get('/newfeeds',routes.views.social.newfeeds);
+
+
+	//social
 	app.post('/post/create', routes.apis.post.create);
 	app.get('/post', routes.views.social.post.view);
+
+	app.get('/user/:username', routes.views.social.userpage);  //view other user page/profile
+	app.get('/user/:username/action/:user_action',routes.apis.follow);  //follow unfollow
+
 	app.post('/categories/get', routes.apis.categories.get);
 	app.get('/search/categories', routes.views.search.categories.view);
+
 
 
 

@@ -21,16 +21,16 @@ User.add({
 	age: {type:Types.Number},
 	email: { type: Types.Email, initial: true, required: true, index: true, unique:true },
 	password: { type: Types.Password, initial: true, required: true },	// hashed value of password using bscrypt
-	enrolledCourseIds: {type:Types.Text},	//universal ID of course that he/she are enrolling
+	enrolledCourseIds: {type:Types.TextArray},	//universal ID of course that he/she are enrolling
 											//for example ["CourseraCS101","EdxMSS11"]
-	finishedCourseIds:{type:Types.Text},		//universal ID of course that user finished
-	commentIds: {type:Types.Text},
+	finishedCourseIds:{type:Types.TextArray},		//universal ID of course that user finished
+	commentIds: {type:Types.TextArray},
 	PostIds: {type:Types.Text},
 	socialPoint: {type:Types.Number},
-	followingPeopleIds: {type:Types.Text},  //[]  people that this user are following
-	followedPeopleIds: {type:Types.Text},	//[]  people that follow this user
-	enrollingChallengeIds: {type:Types.Text},	//[]
-	finishedChallengeIds: {type:Types.Text},	//[]
+	followingPeopleIds: {type:Types.TextArray},  //[]  people that this user are following
+	followedPeopleIds: {type:Types.TextArray},	//[]  people that follow this user
+	enrollingChallengeIds: {type:Types.TextArray},	//[]
+	finishedChallengeIds: {type:Types.TextArray},	//[]
 	location: {type:Types.Text},				//name of area		
 	language: {type:Types.Text},
 	currentUniversity: {type:Types.Text},
