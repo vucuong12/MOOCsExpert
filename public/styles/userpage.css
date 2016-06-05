@@ -37,3 +37,15 @@
 .view-btn {
   float:right
 }
+
+.upvote-btn, .downvote-btn {
+  cursor: pointer;
+}
+
+#post-vote{
+
+}
+
+.no-float {
+
+}
