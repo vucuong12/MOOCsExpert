@@ -34,21 +34,12 @@ block body
 						button.btn.btn-primary.dropdown-toggle(type="button" data-toggle="dropdown") Choose Source
 						ul.dropdown-menu
 							li.menu-item
-								a(href="#") Coursera
+								a(href="#" data-source="Coursera").index-source Coursera
 							li.menu-item
-								a(href="#") Udemy
-							li.menu-item
-								a(href="#") Udacity
+								a(href="#" data-source="Udemy").index-source Udemy
 
-					ul.categories-list
-						hr
-						h3 Coursera
-						li.menu-item
-							a(href="#") Computer Science
-						li.menu-item
-							a(href="#") Economics
-						li.menu-item
-							a(href="#") Politics
+					ul#categories-list
+						
 
 					
 		#center-panel.col-xs-7

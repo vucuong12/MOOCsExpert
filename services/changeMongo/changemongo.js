@@ -22,14 +22,11 @@ function run(){
     if (err) return console.error(err);
     for (var i in docs){
       var doc = docs[i];
-      if (!doc) console.log("DM " + doc);
-      
-      //doc.category = ["1","2"];
-      console.log(doc.source);
-      var dm = JSON.parse(doc.categories);
-        if (dm.length >= 0)
-          console.log(doc.categories);
-      doc.category = JSON.parse(doc.categories);
+      var temp = [];
+      for (var index in doc.category){
+        temp.push(doc.category[index].trim());
+      }
+      doc.category = temp;
       doc.save(function(err){
         if (err) return console.log(err);
         console.log(count++);

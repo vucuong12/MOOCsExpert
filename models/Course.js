@@ -23,7 +23,6 @@ Course.add({
 	instructors: {type: Types.Text}, //[]
 	lessons: {type: Types.Text},
 	duration: {type: Types.Text},
-	categories: {type: Types.Text}, //[]
 	isPaid: {type: Types.Boolean},
 	price: {type: Types.Text},
 	courseraType: {type: Types.Text},

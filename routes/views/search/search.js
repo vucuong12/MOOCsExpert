@@ -25,6 +25,7 @@ exports = module.exports = function(req, res) {
       // Render the view
       locals.results = finalList;
       locals.query = query;
+      locals.type = "normalSearch";
       next();
     })
   })
@@ -40,7 +41,7 @@ exports = module.exports = function(req, res) {
         for (var index in results){
           var course = results[index];
           var newCourse = {
-            id: course.id,
+            cid: course.id,
             smallImageUrl: course.image_240x135,
             title: course.title,
             source: "Udemy"
@@ -65,7 +66,7 @@ exports = module.exports = function(req, res) {
         for (var index in results){
           var course = results[index];
           var newCourse = {
-            id: course.id,
+            cid: course.id,
             smallImageUrl: course.photoUrl,
             title: course.name,
             source: "Coursera"
@@ -97,5 +98,5 @@ exports = module.exports = function(req, res) {
     return result;
   }
   
-  view.render('search');
+  view.render('search/search');
 };
