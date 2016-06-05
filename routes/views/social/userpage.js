@@ -34,9 +34,10 @@ exports = module.exports = function(req, res) {
 		if (!locals.data.targetUser)
 			res.redirect('/404-no-user');
 		//check if following already
-		if (locals.user.followingPeopleIds.indexOf(locals.data.targetUser._id)>-1  || locals.user._id==locals.data.targetUser._id )
+		if ((locals.user.followingPeopleIds.indexOf(locals.data.targetUser._id)>-1)  || locals.user._id.equals(locals.data.targetUser._id) ){
 			locals.data.alreadyFollowing=true;
-		else next();
+		}
+		next();
 	});
 
 	//load all the posts

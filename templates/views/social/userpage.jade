@@ -3,6 +3,9 @@ extends ../../layouts/default
 block css
   link(href="/styles/post.css", rel="stylesheet")
 
+block js
+  script(src="/js/follow.js", type="text/javascript")
+
 mixin post(index,post)
   .container-fluid:.row
     .col-xs-1
@@ -41,10 +44,10 @@ block body
             h2 User 
               strong #{data.targetUser.username}
           .row
-            if data.alreadyFollowing
-              button(type="button" class="btn btn-primary" id="follow-button") Follow
+            if (data.alreadyFollowing==false)
+              button(type="button" class="btn btn-primary" id="follow-button" onclick="followUser()") Follow
             else 
-              button(type="button" class="btn btn-warning" id="unfollow-button") Unfollow
+              button(type="button" class="btn btn-warning" id="unfollow-button" onclick="unFollowUser()") Unfollow
             button(type="button" class="btn btn-info" id="follow-button") Message
         .container
           .row
@@ -52,9 +55,7 @@ block body
               each post,index in data.posts
                   +post(index,post)
             .col-xs-4
-              br
               h3 Course Enrolling
-              br
               each course in data.courses
                 .row
                   a(href="/course?source="+course.source+"&id="+course.cid)=course.title

@@ -56,6 +56,8 @@ exports = module.exports = function(app) {
 	app.get('/post', routes.views.social.post.view);
 
 	app.get('/user/:username', routes.views.social.userpage);  //view other user page/profile
+	app.get('/user/:username/action/:user_action',routes.apis.follow);  //follow unfollow
+
 	app.post('/categories/get', routes.apis.categories.get);
 	app.get('/search/categories', routes.views.search.categories.view);
 
