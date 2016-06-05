@@ -34,11 +34,10 @@ exports = module.exports = function(req, res) {
 
 	// Load the posts
 	view.on('init', function(next) {
-		
 		var q = keystone.list('MyPost').model.find({
-				_id:{$in: locals.data.friendIds}	
+				userId:{$in: locals.data.friendIds}	
 			})
-			.sort('-date')
+			.sort({createdAt:'desc'})
 			.limit(20);
 		
 		q.exec(function(err, results) {

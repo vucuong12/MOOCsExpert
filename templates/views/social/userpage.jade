@@ -7,9 +7,8 @@ block js
   script(src="/js/follow.js", type="text/javascript")
 
 mixin post(index,post)
-  .container-fluid:.row
-    .col-xs-1
-    .col-xs-10
+  .container-fluid:.row.post-wrapper
+    .col-xs-11
       h3= post.title
       hr.thick-hr
       .col-xs-9
@@ -19,7 +18,7 @@ mixin post(index,post)
           .vote-number(style="padding-left:3px")= 12
           .downvote-btn
             <i class="fa fa-caret-down" style="font-size:40px"></i>
-        .col-xs-11.no-float #{post.content}
+        .col-xs-11.no-float!= post.content
         
       .col-xs-3
         h5 created at: #{post._.createdAt.format('YYYY-MM-DD')}
@@ -33,12 +32,12 @@ mixin post(index,post)
             |, in section
             a(href="/course?source="+post.source+"&id="+post.cid)=post.lessionNumber+post.lessionName
     .col-xs-1
-
+  .newline
 block body
   .container-fluid
     .row
-      .col-xs-2
-      .col-xs-8
+      .col-xs-1
+      .col-xs-10.fixed-box
         center
           .row
             h2 User 
@@ -49,13 +48,14 @@ block body
             else 
               button(type="button" class="btn btn-warning" id="unfollow-button" onclick="unFollowUser()") Unfollow
             button(type="button" class="btn btn-info" id="follow-button") Message
-        .container
-          .row
+        div(style="margin-top: 30px;")
+          .col-xs-12
             .col-xs-8
               each post,index in data.posts
                   +post(index,post)
-            .col-xs-4
-              h3 Course Enrolling
-              each course in data.courses
-                .row
-                  a(href="/course?source="+course.source+"&id="+course.cid)=course.title
+            .col-xs-4(style="background-color: white")
+              center
+                h3 Course Enrolling
+              each course,index in data.courses
+                .row(style="padding-left: 10px;  margin-top:10px")
+                  a(href="/course?source="+course.source+"&id="+course.cid)= index + 1 + " : " + course.title
