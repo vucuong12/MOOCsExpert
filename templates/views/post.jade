@@ -7,11 +7,28 @@ block body
   script.
     var content = !{JSON.stringify(myPost.content)}
   #post-page.container-fluid:.row
-    #post-left-panel.col-xs-2
-    #post-center-panel.col-xs-8
-      #post-content
-                 
-    #post-right-panel.col-xs-2
+    #post-left-panel.col-xs-1
+    #post-main-panel.col-xs-10
+      h3#post-title= myPost.title
+      hr.thick-hr
+      #post-center-panel.col-xs-9
+        #post-vote.col-xs-1.no-float
+          .upvote-btn
+            <i class="fa fa-caret-up" style="font-size:40px"></i>
+          .vote-number(style="padding-left:3px")= 12
+          .downvote-btn
+            <i class="fa fa-caret-down" style="font-size:40px"></i>
+        #post-content.col-xs-11.no-float
+        
+
+        
+      #post-right-panel.col-xs-3
+        h5 created at: #{myPost._.createdAt.format('YYYY-MM-DD')}
+        h5 views: 0
+        | author: 
+        a(href="#") #{user.username}
+    .col-xs-1
+
 
 
 //- #{data.post._.publishedDate.format('MMMM Do, YYYY')} 
