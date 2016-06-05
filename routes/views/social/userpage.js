@@ -1,5 +1,6 @@
 var keystone = require('keystone');
 var User = keystone.list('User');
+var async = require('async');
 exports = module.exports = function(req, res) {
 	
 	var view = new keystone.View(req, res);
@@ -10,7 +11,10 @@ exports = module.exports = function(req, res) {
 	locals.section = 'userpage';
 	locals.data = {
 		posts: [],
+		postAuthors: [],
 		targetUser: null,
+		courses: [],
+		
 	};
 
 	//get the user
@@ -27,6 +31,7 @@ exports = module.exports = function(req, res) {
 	view.on('init',function(next){
 		if (!locals.data.targetUser)
 			res.redirect('/404-no-user');
+		else next();
 	});
 
 	//load all the posts
@@ -34,10 +39,30 @@ exports = module.exports = function(req, res) {
 		keystone.list('MyPost').model.find({
 			userId:locals.data.targetUser._id
 		}).exec(function(err,posts_res){
-			locals.data.posts=posts_res;
+			locals.data.posts=(posts_res || []);
+			async.forEachOf(locals.data.posts,function(post,index,cb){
+				keystone.list('User').model.findOne({
+					_id: post.userId
+				}).exec(function(err,myUser){
+					locals.data.postAuthors[index]=myUser;
+					cb();
+				});
+			},function(err){
+				next(err);
+			});
+		});
+	});
+
+	//load all the courses
+	view.on('init',function(next){
+		keystone.list('MyCourse').model.find({
+			userId:locals.data.targetUser._id
+		}).limit(10).exec(function(err,list_courses){
+			locals.data.courses=list_courses;
 			next();
 		});
 	});
+
 	
 	
 	// Render the view
