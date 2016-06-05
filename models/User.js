@@ -55,7 +55,7 @@ User.schema.virtual('canAccessKeystone').get(function() {
  * Registration
  */
 
-User.defaultColumns = 'username, name';
+User.defaultColumns = 'username, name, _id';
 User.register();
 
 
