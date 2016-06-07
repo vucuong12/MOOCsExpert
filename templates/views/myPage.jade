@@ -11,8 +11,14 @@ block body
     #myPage-center-panel.col-xs-8
       center
         h1 My Page
-      .profile-button
-        a(href="/userProfile") View your profile
+      center 
+        .option-button
+          a(href="/userProfile") 
+            button.btn.primary-btn View your profile
+          a(href="/user/"+user.username +"/following")
+            button.btn.primary-btn Following
+          a(href="/user/"+user.username+"/followed")
+            button.btn.primary-btn Followed
       .courseList
         each course in courseList
           .myPage-course.clearfix.fixed-box

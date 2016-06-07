@@ -22,4 +22,4 @@ module.exports = {
       res.json({success:true, data:data})
     });
   }
-}
+} 

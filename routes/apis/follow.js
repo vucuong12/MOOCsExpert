@@ -24,13 +24,18 @@ exports = module.exports = function(req, res) {
 		} else {
 			if (action=='follow')
 				//follow
+
 				if (req.user.followingPeopleIds.indexOf(targetUser._id)>-1){
 					res.json({success:false});
 				} else { 
 					req.user.followingPeopleIds.push(targetUser._id);
 					req.user.save(function(err){
-						if (err) res.json({success:false});
-						else res.json({success:true});
+						targetUser.followedPeopleIds.push(req.user._id);
+						targetUser.save(function(err){
+							if (err) res.json({success:false});
+							else res.json({success:true});	
+						})
+						
 					});
 					
 				}
@@ -42,8 +47,15 @@ exports = module.exports = function(req, res) {
 				} else {
 					req.user.followingPeopleIds.splice(pos,1);
 					req.user.save(function(err){
-						if (err) res.json({success:false}) 
-						else res.json({success:true});
+						var pos1 = targetUser.followedPeopleIds.indexOf(req.user._id);
+						if (pos1 > -1){
+							targetUser.followedPeopleIds.splice(pos1,1);
+						}
+						targetUser.save(function(err){
+							if (err) res.json({success:false}) 
+							else res.json({success:true});	
+						})
+						
 					});
 					
 				}

@@ -15,7 +15,6 @@ exports = module.exports = function(req, res) {
     // locals.section is used to set the currently selected
   // item in the header navigation.
   locals.section = 'search';
-  console.log(req.query);
   view.on('init', function(next) {
     if (type==="course"){
       async.waterfall([
@@ -30,7 +29,6 @@ exports = module.exports = function(req, res) {
         next();
       })
     } else if (type==="user") {
-
       keystone.list("User").model.find({
         username: new RegExp("\\b"+query+".*?\\b", "i")
       })

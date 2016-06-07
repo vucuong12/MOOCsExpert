@@ -23,7 +23,13 @@ block body
           ul#categories-list
     #search-center-panel.col-xs-8
       center
-        h3= "Search result for \" " + query + " \":"
+        if (type==="user")
+          h3= "Search result for \" " + query + " \":"
+        else
+          if (follow === "followed")
+            h3 Followed list for user <strong> #{targetUser} </strong>
+          else
+            h3 Following list for user <strong> #{targetUser} </strong>
         br
         br
         each user in users
