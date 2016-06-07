@@ -37,6 +37,7 @@ block body
 				button(class="btn btn-lg btn-primary btn-block" type="submit") Log In
 				br
 			//- Google Log in - can be modify the outlook of the button
-			div(class="g-signin2" data-width="" data-onsuccess="onSignIn")
+			div(id="gSignInWrapper")
+				button(class="customGPlusSignIn btn btn-lg btn-google btn-block" id="customgg" ) Log in With Google
 			//-Facebook log in - can me modify the outlook of the button
-			fb:login-button(scope="public_profile,email" onlogin="checkLoginState();")
+			button(class="btn btn-lg btn-facebook btn-block" onclick="FB.login(Websignin, {scope: 'public_profile,email'})") Log In With Facebook

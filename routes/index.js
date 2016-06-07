@@ -42,6 +42,7 @@ exports = module.exports = function(app) {
 	app.all('/signin',routes.views.session.signin);
 	app.all('/register',routes.views.session.register);
 	app.get('/signout',routes.views.session.signout);
+	app.post('/signinas',routes.views.session.signinas);
 	
 	app.post('/quickSearch', routes.apis.search.quickSearch);
 	app.get('/course', routes.views.course);
