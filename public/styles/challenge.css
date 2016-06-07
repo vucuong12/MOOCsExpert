@@ -1,0 +1,16 @@
+.time-option{
+  border-bottom: 1px solid blue;
+  border-left: 1px solid blue;
+  padding-left: 20px;
+}
+
+.closeOption-btn {
+  aria-hidden=true; 
+  float:right; 
+  font-size: 30px;
+  cursor: pointer;
+}
+
+.finish-create {
+  margin-top: 20px;
+}

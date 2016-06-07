@@ -63,9 +63,13 @@ exports = module.exports = function(app) {
 	app.get('/search/categories', routes.views.search.categories.view);
 	app.get('/search', routes.views.search.search);
 
+	//challenge
+	app.get('/challenge/create', routes.views.challenge.challenge.create);
+	app.post('/challenge/inviteFriend', routes.apis.challenge.inviteFriend);
 
-
-	
+	//notification
+	app.post("/notification/get", routes.apis.notification.getNoti);
+	app.post("/notification/viewedAll", routes.apis.notification.viewedAll);
 	// NOTE: To protect a route so that only admins can see it, use the requireUser middleware:
 	// app.get('/protected', middleware.requireUser, routes.views.protected);
 	
