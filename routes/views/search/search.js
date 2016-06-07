@@ -11,23 +11,37 @@ exports = module.exports = function(req, res) {
   var view = new keystone.View(req, res);
   var locals = res.locals;
   var query = req.query.query;
-  
+  var type = req.query.type;
     // locals.section is used to set the currently selected
   // item in the header navigation.
   locals.section = 'search';
-
+  console.log(req.query);
   view.on('init', function(next) {
-    async.waterfall([
-      udemySearch,
-      courseraSearch,
-    ],function(err, finalList){
-      finalList = reorder(finalList);
-      // Render the view
-      locals.results = finalList;
-      locals.query = query;
-      locals.type = "normalSearch";
-      next();
-    })
+    if (type==="course"){
+      async.waterfall([
+        udemySearch,
+        courseraSearch,
+      ],function(err, finalList){
+        finalList = reorder(finalList);
+        // Render the view
+        locals.results = finalList;
+        locals.query = query;
+        locals.type = "normalSearch";
+        next();
+      })
+    } else if (type==="user") {
+
+      keystone.list("User").model.find({
+        username: new RegExp("\\b"+query+".*?\\b", "i")
+      })
+      .exec(function(err, results) {
+        console.log(results);
+        locals.users = results;
+        locals.query = query;
+        next();
+      });
+    }
+      
   })
 
   //Get udemy courses
@@ -97,6 +111,8 @@ exports = module.exports = function(req, res) {
       
     return result;
   }
-  
-  view.render('search/search');
+  if (type==="course")
+    view.render('search/search');
+  else
+    view.render("search/searchUser")
 };

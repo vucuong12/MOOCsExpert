@@ -42,7 +42,8 @@ exports = module.exports = function(app) {
 	app.all('/signin',routes.views.session.signin);
 	app.all('/register',routes.views.session.register);
 	app.get('/signout',routes.views.session.signout);
-	app.get('/search', routes.views.search.search);
+	
+	app.post('/quickSearch', routes.apis.search.quickSearch);
 	app.get('/course', routes.views.course);
 	app.post('/update/takecourse', routes.apis.update.takeCourse);
 	
@@ -60,7 +61,7 @@ exports = module.exports = function(app) {
 
 	app.post('/categories/get', routes.apis.categories.get);
 	app.get('/search/categories', routes.views.search.categories.view);
-
+	app.get('/search', routes.views.search.search);
 
 
 

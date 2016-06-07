@@ -51,6 +51,7 @@ User.schema.virtual('canAccessKeystone').get(function() {
 });
 
 
+
 /**
  * Registration
  */

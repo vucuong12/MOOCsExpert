@@ -1,0 +1,33 @@
+extends ../../layouts/default
+block css
+  link(href="/styles/search/search.css", rel="stylesheet")
+  link(href="/styles/landing.css", rel="stylesheet")
+block js
+  script(src="/js/search/search.js", type="text/javascript")
+  script(src="/js/landing.js", type="text/javascript")
+block body
+  #search-page.container-fluid:.row
+    #left-panel.col-xs-2
+      #left-part.clearfix
+        aside.category-menu
+          h4.menu-header Browser
+          hr
+          .dropdown.sources-list
+            button.btn.btn-primary.dropdown-toggle(type="button" data-toggle="dropdown") Choose Source
+            ul.dropdown-menu
+              li.menu-item
+                a(href="#" data-source="Coursera").index-source Coursera
+              li.menu-item
+                a(href="#" data-source="Udemy").index-source Udemy
+
+          ul#categories-list
+    #search-center-panel.col-xs-8
+      center
+        h3= "Search result for \" " + query + " \":"
+        br
+        br
+        each user in users
+          div.user-block
+            a(href="/user/"+user.username)
+             h4= user.username
+    #search-right-panel.col-xs-2
