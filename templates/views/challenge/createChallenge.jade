@@ -1,0 +1,40 @@
+extends ../../layouts/default
+block css
+  link(href="/styles/challenge.css", rel="stylesheet")
+block js
+  script(src="/js/challenge.js", type="text/javascript")
+block body
+
+  #myPage-page.container-fluid:.row
+    #myPage-left-panel.col-xs-3
+    #myPage-center-panel.col-xs-6
+      center
+        h1 Create new challenge
+      label 
+        h3 Rule:
+      i
+        p.
+          Every week, you and your friend need to post at least one post about your course.
+      i
+        p.
+          If any of you does not post any post for a week, the 2 points from that person's total points will be substracted and the added to the other's total points.
+      hr
+      lable 
+        h3 Proposed time duration to finish the challenge
+        .time-option-list
+
+            
+      lable Add new option
+      input.form-control.inline-ele(type="number", style="margin-top: 10px;width: 50%;")#newTime
+      |  week(s)
+      button.btn.btn-primary.addOption-btn Add
+      center.finish-create
+        button.btn.btn-success.publish-btn Publish
+        button.btn.btn-success.invite-btn Invite
+      center  
+        .invite-section(style="display:none;").inline-ele
+          input.form-control(type="text")#friend-search
+        .invite-section.inline-ele
+          button.btn.btn-info.finish-btn(style="display:none") Send invitation
+
+    #myPage-right-panel.col-xs-3

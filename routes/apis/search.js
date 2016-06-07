@@ -8,10 +8,11 @@ module.exports = {
     var locals = res.locals;
     var user = req.user;
     var userName = req.body.value;
-
-    keystone.list("User").model.find({
+    var query = {
       username: new RegExp("\\b"+userName+".*?\\b", "i")
-    })
+    }
+
+    keystone.list("User").model.find(query)
     .exec(function(err, results) {
       var data = [];
       for (var i in results){

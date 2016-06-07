@@ -12,15 +12,28 @@ var Challenge = new keystone.List('Challenge',{defaultSort: '-createdAt'});
 //text, then we can retrieve them and using JSON.parse to get the array later
 
 Challenge.add({
-	cid: {type: Types.Number},
-	content: {type: Types.Text},
-	byUserId: {type: Types.Number},
+	state: {type: Types.Text},
+  
+  firstUserId: {type: Types.Text},
+  secondUserId: {type: Types.Text},
+
+  firstProposedTime: {type: Types.TextArray}, //of the first user
+  secondProposedTime: {type: Types.TextArray}, //of the second user
+
+  duration: {type: Types.Number}, //weeks
 	openDate: {type: Types.Date},
 	expireDate:{type: Types.Date},
-	point: {type: Types.Number},
+	
+
+
+
+
+
+  point: {type: Types.Number},
 	commentIds: {type: Types.Number},	//[]
 	relatedCourseId: {type: Types.Text},
 	EnrollingUserIds: {type: Types.Text},  //[]
+
 });
 
 

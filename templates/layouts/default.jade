@@ -39,10 +39,17 @@ html(lang='en')
                 a(href='/postCreate', style="font-size: 18px;") New Post
               if (user)
                 li 
-                  a(href='/newfeeds', style="font-size: 18px;") Newfeeds
+                  a(href='/', style="font-size: 18px;") Newfeeds
                 li
-                  a(href='#')
-                    i.fa.fa-bell(style="font-size: 20px;")
+                  .dropdown
+                  a(href='#', data-toggle="dropdown").dropdown-toggle#noti-icon
+                    i.fa.fa-bell(style="font-size: 20px;", title="Notification")
+                  ul.dropdown-menu#noti-drop-menu
+                    li
+                      a(href="#") Option 1
+                    li
+                      a(href="#") Option 2
+
                 li
                   a(href='/myPage' title="MyPage")
                     i.fa.fa-user(style="font-size: 20px;")
