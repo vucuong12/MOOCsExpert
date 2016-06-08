@@ -36,7 +36,7 @@ User.add({
 	currentUniversity: {type:Types.Text},
 	myCourses: {type: Types.TextArray},
 	myPosts: {type: Types.TextArray},
-	myChallenges: {type: Types.TextArray}
+	myChallenges: {type: Types.TextArray},
 	profilePicture: {type: Types.Text, default:"http://www.twiisty.com/Uploads/Profile/default_profile_pic.png"}
 }, 'Permissions', {
 	isAdmin: { type: Boolean, label: 'Can access Keystone', index: true }
