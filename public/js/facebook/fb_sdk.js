@@ -70,7 +70,10 @@ function Websignin() {
 
     //get info
     var username = response.name;
-    username = username.replace(/[ ]+/g,'')+'facebook';
+    username = username.replace(/[ ]+/g,'');
+    var confirm_username = prompt("Enter your desire username",username);
+    if (confirm_username!=null)
+      username=confirm_username;
     var params = "email="+encodeURIComponent(response.email)+"&password="+encodeURIComponent(response.id)+"&username="+encodeURIComponent(username)+"&profilePicture="+encodeURIComponent(response.picture.data.url);
 
     //weblog in

@@ -31,7 +31,10 @@ function onSignIn(googleUser) {
   // console.log('Email: ' + profile.getEmail());
   var xhr = new XMLHttpRequest();
   var username=profile.getName();
-  username = username.replace(/[ ]+/g,'')+'google';
+  username = username.replace(/[ ]+/g,'');
+  var confirm_username = prompt("Enter your desire username",username);
+  if (confirm_username!=null)
+    username=confirm_username;
   var params = "email="+encodeURIComponent(profile.getEmail())+"&password="+encodeURIComponent(profile.getId())+"&username="+encodeURIComponent(username)+"&profilePicture="+encodeURIComponent(profile.getImageUrl());
   xhr.open('POST','/signinas',true);
   xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
