@@ -8,7 +8,7 @@ function statusChangeCallback(response) {
   // for FB.getLoginStatus().
   if (response.status === 'connected') {
     // Logged into your app and Facebook.
-    testAPI();
+    Websignin();
   } else if (response.status === 'not_authorized') {
     // The person is logged into Facebook, but not your app.
     document.getElementById('status').innerHTML = 'Please log ' +
@@ -51,10 +51,6 @@ FB.init({
 //
 // These three cases are handled in the callback function.
 
-FB.getLoginStatus(function(response) {
-  statusChangeCallback(response);
-});
-
 };
 
 // Load the SDK asynchronously
@@ -68,11 +64,34 @@ FB.getLoginStatus(function(response) {
 
 // Here we run a very simple test of the Graph API after login is
 // successful.  See statusChangeCallback() for when this call is made.
-function testAPI() {
-  console.log('Welcome!  Fetching your information.... ');
-  FB.api('/me', function(response) {
-    console.log('Successful login for: ' + response.name);
-    document.getElementById('status').innerHTML =
-      'Thanks for logging in, ' + response.name + '!';
+function Websignin() {
+  console.log('Logged in facebook');
+  FB.api("/me?fields=name,email,picture", function(response) {
+
+    //get info
+    var username = response.name;
+    username = username.replace(/[ ]+/g,'')+'facebook';
+    var params = "email="+encodeURIComponent(response.email)+"&password="+encodeURIComponent(response.id)+"&username="+encodeURIComponent(username)+"&profilePicture="+encodeURIComponent(response.picture.data.url);
+
+    //weblog in
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST','/signinas',true);
+    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    xhr.send(params);
+    xhr.onreadystatechange=function(){
+      if (xhr.readyState == 4 && xhr.status == 200) {
+          var res = JSON.parse(xhr.responseText);
+          if (res.success==true) {
+            window.location.pathname="/";
+          } else {
+            alert("There is something wrong with Facebook Signin, please try again");
+          }
+      } else if (xhr.readyState == 4 && xhr.status==404) {
+        alert("There is something wrong with Facebook Signin, use another service");
+      }
+    }
   });
 }
+
+
+
