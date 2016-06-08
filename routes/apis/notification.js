@@ -12,11 +12,11 @@ module.exports = {
     var locals = res.locals;
     var user = req.user;
 
-    keystone.list("Notification").model.find({userId: user._id}, function(err, notis){
-      console.log("DM");
-      console.error(err);
+    keystone.list("Notification").model.find({userId: user._id})
+    .sort({createdAt:'desc'})
+    .limit(10)
+    .exec(function(err, notis){
       if (err) {
-
         res.json({success: false});
       } else {
         res.json({success:true, notis: notis})

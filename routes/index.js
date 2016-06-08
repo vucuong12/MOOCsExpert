@@ -64,9 +64,13 @@ exports = module.exports = function(app) {
 	app.get('/search', routes.views.search.search);
 
 	//challenge
+	app.get('/challenge/view', routes.views.challenge.challenge.view);
 	app.get('/challenge/create', routes.views.challenge.challenge.create);
 	app.post('/challenge/inviteFriend', routes.apis.challenge.inviteFriend);
-
+	app.post('/challenge/updateOption', routes.apis.challenge.updateOption);
+	app.post('/challenge/updateAgree', routes.apis.challenge.updateAgree);
+	app.post('/challenge/updateRefuse', routes.apis.challenge.updateRefuse);
+	app.post('/challenge/sendProposedTime', routes.apis.challenge.sendProposedTime);
 	//notification
 	app.post("/notification/get", routes.apis.notification.getNoti);
 	app.post("/notification/viewedAll", routes.apis.notification.viewedAll);

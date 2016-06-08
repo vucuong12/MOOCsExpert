@@ -5,45 +5,37 @@ block js
 	script(src="js/landing.js")
 
 
-mixin post(post, postAuthor)
+mixin displayContent(content)
 	.col-xs-12.content-item
-		.index-post-header.row
-			.col-xs-3.friend-image-wrapper
-				img.friend-image(src="https://www.whitehouse.gov/sites/whitehouse.gov/files/images/twitter_cards_potus.jpg")
-			.col-xs-8.metadata
-				div
-					a(href="/user/"+postAuthor.username)= postAuthor.username
-					i(style="margin-left: 20px;") Created at #{post._.createdAt.format('MMMM Do, YYYY')}
-				div
-					h5.inline-ele Course : 
-					a(href="/course?source="+post.source + "&id="+post.cid)=post.courseTitle
-				div
-					h5.inline-ele(style="margin-top:3px;") #{post.lessonName}
+		.index-content-header.row
+			if (content.type === "post")
+				.col-xs-3.friend-image-wrapper
+					img.friend-image(src="https://www.whitehouse.gov/sites/whitehouse.gov/files/images/twitter_cards_potus.jpg")
+				.col-xs-8.metadata
+					div
+						a(href="/user/"+content.postAuthor.username)= content.postAuthor.username
+						i(style="margin-left: 20px;") Created at #{content._.createdAt.format('MMMM Do, YYYY')}
+					div
+						h5.inline-ele Course : 
+						a(href="/course?source="+content.source + "&id="+content.cid)=content.courseTitle
+					div
+						h5.inline-ele(style="margin-top:3px;") #{content.lessonName}
+			else
+				center
+					a(href="/challenge/view?id="+content._id) New Challenge created by #{content.creatorName}
+
 		hr
-		center
-			h4
-				strong= post.title
-		p!= post.content
+		if (content.type === "post")
+			center
+				h4
+					strong= content.title
+			p!= content.content
+		else
+			center(style="padding-bottom: 20px;")
+				a(href="/challenge/view?id="+content._id)
+					button.btn.btn-primary Take a look 
 	.newline
 	
-
-	//- .col-xs-7.content-item.post(data-ks-editable=editable(user, { list: 'Post', id: post.id }))
-	//- 	p!= post.content
-		//- p.small.text-muted 
-		//- 	if post.date
-		//- 		| #{post._.date.format('MMMM Do, YYYY')} 
-		//- 	if post.byUserId
-		//- 		| by 
-		//- 		a(href="/user/"+post.byUserId)=post.byUserId
-		//- if post.relatedCourseId
-		//- 	p.small
-		//- 		| About Course 
-		//- 		a(href="/course/"+post.relatedCourseId)=post.relatedCourseId
-		//- 	if post.relatedLessionId
-		//- 		| in 
-		//- 		a(href="/course/"+post.relatedLessionId)=post.relatedLessionId
-		//- br
-
 block body
 	#body.container-fluid:.row
 		#left-panel.col-xs-2
@@ -100,8 +92,8 @@ block body
 							p How does the distressed public sight the relief? Whatever cylinder exercises underneath the center. How does a glove breeze? A feeling arm locates the guaranteed coast. A nurse impairs this crowd. The temporary radio escapes in the editorial.
 						.newline
 					else
-						each post, index in data.posts
-							+post(post, data.postAuthors[index])
+						each content in data.contentList
+							+displayContent(content)
 
 		#right-panel.col-xs-3
 			#right-part.clearfix

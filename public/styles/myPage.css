@@ -2,7 +2,6 @@
   margin-bottom: 40px;
   margin-top: 40px;
   background-color: white;
-  border-radius: 10%;
 }
 
 
@@ -37,3 +36,10 @@
 .view-btn {
   float:right
 }
+.myPage-challenge {
+  padding-right: 0;
+  height: 120px;
+  border: 5px solid green;
+  margin-bottom: 20px;
+}
+

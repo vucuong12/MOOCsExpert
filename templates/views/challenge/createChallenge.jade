@@ -29,12 +29,12 @@ block body
       |  week(s)
       button.btn.btn-primary.addOption-btn Add
       center.finish-create
-        button.btn.btn-success.publish-btn Publish
+        button.btn.btn-success.publish-btn(data-source=course.source, data-cid=course.cid) Publish
         button.btn.btn-success.invite-btn Invite
       center  
         .invite-section(style="display:none;").inline-ele
           input.form-control(type="text")#friend-search
         .invite-section.inline-ele
-          button.btn.btn-info.finish-btn(style="display:none") Send invitation
+          button.btn.btn-info.finish-btn(style="display:none", data-source=course.source, data-cid=course.cid) Send invitation
 
     #myPage-right-panel.col-xs-3

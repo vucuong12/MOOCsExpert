@@ -10,7 +10,7 @@ MyCourse.add({
   source: {type: Types.Text},   //Example: Coursera, Edx, Udemy
   userId: {type: Types.Text},
   postIds: {type: Types.TextArray},
-  challengeIds: {type: Types.TextArray}
+  challengeId: {type: Types.Text}
 });
 
 MyCourse.register();

@@ -31,7 +31,10 @@ block body
             .col-xs-6
               center
                 label(style="padding-top:10px;") Number of Challenges : 
-                | 0
+                if (course.myChallenge)
+                  | 1
+                else
+                  | 0
             hr
             .col-xs-12
               h3 Posts
@@ -43,6 +46,14 @@ block body
                   button(data-postid=myPost._id + "").btn.primary-btn.view-btn View
                   h5 <strong>Course </strong>: #{myPost.courseTitle}
                   | <strong>Created at </strong>: #{myPost._.createdAt.format('YYYY-MM-DD')}  
-            .col-xs-12
-              h3 Challenges
+            if (course.myChallenge)
+              .col-xs-12
+                h3 Challenges
+                .col-xs-4.myPage-challenge
+                  a(href="/challenge/view?id="+course.myChallenge._id)
+                    h4.inline-ele(style="color:black") You vs #{course.friendName}
+                  a(href="/challenge/view?id="+course.myChallenge._id)
+                    button.btn.primary-btn.view-btn View
+                  h5 <strong> State: </strong> #{course.myChallenge.state.toLowerCase()}
+              
     #myPage-right-panel.col-xs-2
