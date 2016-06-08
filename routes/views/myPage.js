@@ -19,29 +19,44 @@ exports = module.exports  = function(req, res){
           source : myCourse.source,
           cid : myCourse.cid
         }
-        var promise1 = keystone.list("Course").model.findOne(query);
+        //get info of each course
+        var promise1 = keystone.list("Course").model.findOne(query).sort({createdAt:'desc'});
         promise1.lean().exec(function(err, course){
           course.myPosts = [];
-
-          async.each(myCourse.postIds,
-          function(postId, callback){
-            keystone.list("MyPost").model.findOne({_id: postId}).exec(function(err, myPost){
-              course.myPosts.push(myPost);
-              callback();
+          //for each course, get myPosts
+          keystone.list("MyPost").model.find({userId:user._id, source:course.source, cid: course.cid}, function(err, myPosts){
+            if (err){
+              return res.redirect('/404-page-not-found');
+            }
+            course.myPosts = myPosts;
+            //for each course, get myChallenges
+            keystone.list("Challenge").model.findOne({$or:[{firstUserId:user._id},{secondUserId:user._id}],state: {$ne: "REMOVED"},source:course.source, cid: course.cid}, function(err, challenge){
+              if (err){
+                return res.redirect('/404-page-not-found');
+              }
+              course.myChallenge = challenge;
+              if (!challenge){
+                locals.courseList.push(course);
+                return callback();
+              }
+              //Find your friend name
+              var friendId = challenge.firstUserId;
+              if (user._id === challenge.firstUserId) friendId = secondUserId;
+              keystone.list("User").model.findOne({_id: friendId}, function(err, friend){
+                course.friendName = friend.username;
+                locals.courseList.push(course);
+                callback();
+              })
+              
             })
-          },
-          function(err){
-            locals.courseList.push(course);
-            callback(err);  
           })
-
-          
         })
       },
       function(err){
         if (err) {
           console.error(err);
         }
+        console.log(locals.courseList);
         next();
       })
     })

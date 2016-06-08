@@ -6,6 +6,7 @@ block js
 block body
   script.
     var course = !{JSON.stringify(course)};
+    var alreadyTaken = !{JSON.stringify(alreadyTaken)}
   #course-page.container-fluid:.row
     #course-left-panel.col-xs-1
     #course-center-panel.col-xs-10
@@ -43,8 +44,8 @@ block body
           
         else
           h3 You are taking this course
-        a(href="/challenge/create")
-          button(type="button").btn.btn-primary#create-challenge-btn Create a challenge
+        
+        button(type="button").btn.btn-primary#create-challenge-btn Create a challenge
         button(type="button").btn.btn-primary#create-post-btn Create a post
         div#course-img-wrapper
           img#course-img(src=course.source==="Udemy"? course.bigImageUrl:course.smallImageUrl)

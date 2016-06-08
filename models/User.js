@@ -35,8 +35,8 @@ User.add({
 	language: {type:Types.Text},
 	currentUniversity: {type:Types.Text},
 	myCourses: {type: Types.TextArray},
-	myPosts: {type: Types.TextArray}
-
+	myPosts: {type: Types.TextArray},
+	myChallenges: {type: Types.TextArray}
 }, 'Permissions', {
 	isAdmin: { type: Boolean, label: 'Can access Keystone', index: true }
 });

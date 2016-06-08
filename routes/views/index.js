@@ -16,8 +16,7 @@ exports = module.exports = function(req, res) {
 	locals.data = {
 		currentUser : req.user || locals.defaultUser,
 		//for furthur work with user, use this current user
-		posts: [],
-		postAuthors: [],
+		contentList: [],
 		friendIds: [],
 	};
 
@@ -27,7 +26,6 @@ exports = module.exports = function(req, res) {
 		if (locals.data.currentUser.followingPeopleIds){
 			locals.data.friendIds = locals.data.currentUser.followingPeopleIds;
 		}	
-		console.log(locals.data.friendIds);
 		next();
 	});
 
@@ -41,25 +39,73 @@ exports = module.exports = function(req, res) {
 			.limit(20);
 		
 		q.exec(function(err, results) {
-			locals.data.posts = results;
+			results = results || [];
+			for (var i in results){
+				results[i].type = "post";
+			}
+			locals.data.contentList = results || [];
 			next(err);
+		});
+		
+	});
+
+	// Load the challenges
+	view.on('init', function(next) {
+
+		var q = keystone.list('Challenge').model.find({
+				firstUserId:{$in: locals.data.friendIds},
+				state:"PENDING"
+			})
+			.sort({createdAt:'desc'})
+			.limit(20);
+		
+		q.exec(function(err, challenges) {
+			
+			challenges = challenges || [];
+			//Load challenge creators
+			async.each(challenges,
+			function(challenge, callback){
+				challenge.type = "challenge";
+				keystone.list("User").model.findOne({_id: challenge.firstUserId}, function(err, user){
+					challenge.creatorName = user.username;
+					callback(err);
+				})
+			},
+			function(err){
+				
+				locals.data.contentList = locals.data.contentList.concat(challenges);
+				locals.data.contentList = locals.data.contentList.sort(function(a,b) {
+			    console.log(a.createdAt);
+			    console.log(b.createdAt);
+			    console.log("--------");
+			    return (a.createdAt < b.createdAt) 
+			      ? 1 : (a.createdAt > b.createdAt) ? -1 : 0;
+			  });
+				next(err);
+			})
+			
 		});
 		
 	});
 
 	// Load the posts author
 	view.on('init', function(next) {
-		async.forEachOf(locals.data.posts,function(post,index,cb){
+		async.forEachOf(locals.data.contentList,function(content,index,cb){
+			if (content.type === "challenge"){
+				return cb();
+			}
 			keystone.list('User').model.findOne({
-				_id: post.userId
+				_id: content.userId
 			}).exec(function(err,myUser){
-				locals.data.postAuthors[index]=myUser;
+				content.postAuthor=myUser;
 				cb();
 			});
 		},function(err){
 			next(err);
 		});
 	});
+
+
 
 	// Render the view
 	view.render('index');

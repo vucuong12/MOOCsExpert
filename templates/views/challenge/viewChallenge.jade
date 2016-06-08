@@ -1,0 +1,122 @@
+extends ../../layouts/default
+block css
+  link(href="/styles/challenge.css", rel="stylesheet")
+block js
+  script(src="/js/challenge.js", type="text/javascript")
+block body
+
+  #view-challenge-page(data-challengeid=challenge._id).container-fluid:.row
+    #left-panel.col-xs-3
+    #center-panel.col-xs-6
+      center
+        h2.inline-ele Challenge in
+        a(href="/course?source="+challenge.source + "&id="+challenge.cid) 
+          h4 #{course.title}"
+        .names-box.row
+          .col-xs-4
+            center
+              if (user1)
+                a(href="/user/" + user1.username)= user1.username
+              else
+                | Finding player
+          .col-xs-4
+            lable VS
+          .col-xs-4
+            center
+              if (user2)
+                a(href="/user/" + user2.username)= user2.username 
+              else
+                | Finding player
+          
+             
+
+        
+        div
+          h4.inline-ele Status : 
+          | #{challenge.state}
+
+
+      label 
+        h3 Rule:
+      i
+        p.
+          Every week, you and your friend need to post at least one post about your course.
+      i
+        p.
+          If any of you does not post any post for a week, the 2 points from that person's total points will be substracted and the added to the other's total points.
+      hr
+
+      - var myProposedTime;
+      - var friendProposedTime;
+      //- If the current user is alredy named in this challenge
+      if ((user._id == challenge.firstUserId || user._id == challenge.secondUserId) && challenge.state === "PENDING")
+        if (user._id == challenge.firstUserId)
+          - myProposedTime = challenge.firstProposedTime;
+          - friendProposedTime = challenge.secondProposedTime;
+        else
+
+          - myProposedTime = challenge.secondProposedTime;
+          - friendProposedTime = challenge.firstProposedTime;
+        if (friendProposedTime.length > 0)
+          .friendProposed
+            h3 Your friend's proposed time to finish this challenge:
+            
+            each option,index in friendProposedTime
+              div.time-option.radio
+                lable 
+                  h4
+                    input(type="radio",name="time-option-radio", value=option) 
+                    |Option #{index+1}: #{option} week( s)
+            div.time-option.radio
+              lable 
+                h4
+                  input(type="radio",name="time-option-radio", value="not-agree") 
+                  |Not agree
+            if (challenge.firstUserId && challenge.secondUserId)
+              input(type="submit", value="Agree and take it").btn.btn-info.agree-btn
+              input(type="submit", value="Decline").btn.btn-danger.decline-btn
+        .myProposed
+          h3 Your proposed time to finish this challenge:
+          if (myProposedTime.length === 0)
+            i You have not had any proposed time length
+          .time-option-list.my-list
+            each option,index in myProposedTime
+              div.time-option(data-time=option)
+                lable 
+                  h4.inline-ele Option #{index + 1}: #{option} week( s)
+                  i.fa.fa-times.closeOption-btn
+          lable Add new option
+          input.form-control.inline-ele(type="number", style="margin-top: 10px;width: 50%;")#newTime
+          |  week(s)
+          button.btn.btn-primary.addOption-btn Add
+          center(style="margin-top:20px;")
+            button.btn.btn-info#update-time-option Update
+                 
+      
+      else if(challenge.state === "PENDING")
+        .friendProposed
+          h3 This user's proposed time to finish this challenge:
+          each option,index in challenge.firstProposedTime
+            div.time-option.radio
+              lable 
+                h4
+                  input(type="radio",name="time-option-radio", value=option) 
+                  |Option #{index+1}: #{option} week( s)
+          div.time-option.radio
+            lable 
+              h4
+                input(type="radio",name="time-option-radio", value="not-agree") 
+                |Not agree
+          if (user._id != challenge.firstUserId)
+            input(type="submit", value="Agree and take it").btn.btn-info.agree-btn
+            button.btn.btn-danger.negotiate-btn or Negotatiate
+            .myProposed#negotiate-section(style="display:none")
+              h3 Your proposed time to finish this challenge:
+              .time-option-list.my-list
+              lable Add new option
+              input.form-control.inline-ele(type="number", style="margin-top: 10px;width: 50%;")#newTime
+              |  week(s)
+              button.btn.btn-primary.addOption-btn Add
+              center(style="margin-top:20px;")
+                button.btn.btn-info#send-proposed-time-btn Send your proposed time
+    #right-panel.col-xs-3

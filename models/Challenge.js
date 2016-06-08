@@ -13,7 +13,8 @@ var Challenge = new keystone.List('Challenge',{defaultSort: '-createdAt'});
 
 Challenge.add({
 	state: {type: Types.Text},
-  
+  cid: {type: Types.Text},
+  source: {type: Types.Text},
   firstUserId: {type: Types.Text},
   secondUserId: {type: Types.Text},
 
@@ -21,7 +22,7 @@ Challenge.add({
   secondProposedTime: {type: Types.TextArray}, //of the second user
 
   duration: {type: Types.Number}, //weeks
-	openDate: {type: Types.Date},
+	createdAt: { type: Date, default: Date.now },
 	expireDate:{type: Types.Date},
 	
 

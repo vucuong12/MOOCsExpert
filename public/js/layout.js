@@ -98,12 +98,13 @@ function displayNoti(){
 
 $("#noti-icon").click(function(){
   $(".red-noti").hide();
-  post("notification/viewedAll", {}, function(result){
+  post("/notification/viewedAll", {}, function(result){
   })
+  console.log(notis);
   $("#noti-drop-menu").empty();
   for (var i in notis){
     var noti = notis[i];
-    $("<li>").append($("<a>").attr("href","#").text(noti.content)).appendTo("#noti-drop-menu");
+    $("<li>").append($("<a>").attr("href",noti.link).text(noti.content)).appendTo("#noti-drop-menu");
   }
 
 })

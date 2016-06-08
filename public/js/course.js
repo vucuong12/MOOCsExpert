@@ -22,7 +22,17 @@ $("#take-course-btn").click(function(){
 })
 
 $("#create-post-btn").click(function(){
+  if (!alreadyTaken) {
+    return alert("You need to take this course first !");
+  }
   window.location.href = "/postCreate?source=" + course.source + "&cid=" + course.cid;
+})
+
+$("#create-challenge-btn").click(function(){
+  if (!alreadyTaken) {
+    return alert("You need to take this course first !");
+  }
+  window.location.href = "/challenge/create?source="+course.source + "&id="+course.cid;
 })
 
 $(document).ready(function() {

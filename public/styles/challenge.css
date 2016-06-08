@@ -4,6 +4,8 @@
   padding-left: 20px;
 }
 
+
+
 .closeOption-btn {
   aria-hidden=true; 
   float:right; 
@@ -13,4 +15,21 @@
 
 .finish-create {
   margin-top: 20px;
+}
+
+.myProposed, .friendProposed {
+  margin-top: 30px;
+}
+
+.names-box{
+  margin-top: 30px;
+  padding-right: 0;
+  height: 120px;
+  border: 5px solid green;
+  margin-bottom: 20px;
+}
+
+.names-box .col-xs-4 {
+  padding-top: 30px;
+  font-size: 25px;
 }
