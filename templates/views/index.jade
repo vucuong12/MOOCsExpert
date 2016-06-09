@@ -3,6 +3,7 @@ block css
 	link(href="/styles/landing.css", rel="stylesheet")
 block js
 	script(src="/js/landing.js")
+	script(src="/js/apicall/pointsystem.js", type="text/javascript")
 
 
 mixin displayContent(content)
@@ -16,7 +17,7 @@ mixin displayContent(content)
 						a(href="/user/"+content.postAuthor.username)= content.postAuthor.username
 						i(style="margin-left: 20px;") Created at #{content._.createdAt.format('MMMM Do, YYYY')}
 					div
-						h5.inline-ele Course : 
+						h5.inline-ele Course:  
 						a(href="/course?source="+content.source + "&id="+content.cid)=content.courseTitle
 					div
 						h5.inline-ele(style="margin-top:3px;") #{content.lessonName}
@@ -27,9 +28,16 @@ mixin displayContent(content)
 		hr
 		if (content.type === "post")
 			center
-				h4
-					strong= content.title
-			p!= content.content
+				a(href="/post?postId="+content._id)
+					h4
+						strong= content.title
+			.col-xs-1.no-float
+				.upvote-btn
+					i(class="fa fa-caret-up" style="font-size:40px" onclick="upvote('"+content._id+"')" )
+				.vote-number(style="padding-left:3px" id=content._id+"point")= content.point
+				.downvote-btn
+					i(class="fa fa-caret-down" style="font-size:40px" onclick="downvote('"+content._id+"')")
+			.col-xs-11.no-float!= content.content
 		else
 			center(style="padding-bottom: 20px;")
 				a(href="/challenge/view?id="+content._id)

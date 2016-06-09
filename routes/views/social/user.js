@@ -46,7 +46,7 @@ module.exports = {
 		view.on('init',function(next){
 			keystone.list('MyPost').model.find({
 				userId:locals.data.targetUser._id
-			}).exec(function(err,posts_res){
+			}).sort({createdAt:'desc'}).exec(function(err,posts_res){
 				locals.data.posts=(posts_res || []);
 				async.forEachOf(locals.data.posts,function(post,index,cb){
 					keystone.list('User').model.findOne({

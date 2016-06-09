@@ -10,7 +10,8 @@ block js
 mixin post(index,post)
   .container-fluid:.row.post-wrapper
     .col-xs-11
-      h3= post.title
+      a(href="/post?postId="+post._id)
+        h3= post.title
       hr.thick-hr
       .col-xs-9
         .col-xs-1.no-float
