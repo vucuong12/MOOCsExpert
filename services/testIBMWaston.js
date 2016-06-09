@@ -45,6 +45,6 @@ function getConceptsByWaston(query,callback) {
   
 }
 
-getConceptsByWaston("http://www.bbc.com/news/world-us-canada-36454395", function(err, newQuery){
+getConceptsByWaston("https://www.coursera.org/course/techethics", function(err, newQuery){
   console.log(newQuery);
 })
