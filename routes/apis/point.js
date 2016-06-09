@@ -20,6 +20,14 @@ exports = module.exports = function(req, res) {
 		_id:locals.data.postid	
 	}).exec(function(err,post){
 		if (post) {
+			if (post.userId) {
+				keystone.list('User').model.findOne({_id:post.userId})
+				.exec(function(err,user){
+					if (locals.data.action=='upvote') user.totalPoint++;
+					if (locals.data.action=='downvote') user.totalPoint--;
+					user.save(function(err){});
+				});
+			}
 			if (locals.data.action=='upvote') post.point++;
 			if (locals.data.action=='downvote') post.point--;
 			post.save(function(err){

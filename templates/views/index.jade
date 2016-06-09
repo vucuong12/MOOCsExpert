@@ -91,4 +91,18 @@ block body
 		#right-panel.col-xs-3
 			#right-part.clearfix
 				aside.ranking-section
-					h4.rank-header Ranking
+					.content-tiem
+						h4.rank-header Reputation Ranking
+						.container-float
+							table(class="table")
+								thead
+									tr
+										th User
+										th Reputation Point
+								tbody
+									each user in data.mostReputedUsers
+										tr
+											td 
+												strong=user.username
+											td 
+												strong=user.totalPoint

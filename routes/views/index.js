@@ -19,6 +19,7 @@ exports = module.exports = function(req, res) {
 		//for furthur work with user, use this current user
 		contentList: [],
 		friendIds: [],
+		mostReputedUsers: []
 	};
 
 
@@ -103,6 +104,15 @@ exports = module.exports = function(req, res) {
 		});
 	});
 
+	//load the users with most point on their profile: mostReputedUsers
+
+	view.on('init', function(next) {
+		keystone.list('User').model.find({}).sort({totalPoint:'desc'}).limit(6)
+		.exec(function(err,users){
+			locals.data.mostReputedUsers=users;
+			next();
+		})
+	});
 
 
 	// Render the view

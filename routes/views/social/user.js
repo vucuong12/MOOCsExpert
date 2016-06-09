@@ -108,7 +108,24 @@ module.exports = {
 				view.render("search/searchUser");
 			})
 		})
+	},
+	update_stats: function(req,res){
+		var user = req.user;
+		if (!req.user) return res.json({success:false});
+		keystone.list("MyPost").model.find({userId:user._id}).exec(function(err,posts){
+			var totalPoint =0;
+			async.each(posts,function(post,cb){
+				totalPoint+=post.point;
+				cb();
+			},function(err){
+				user.totalPoint = totalPoint;
+				user.save(function(err){
+					res.json({success:true});
+				});
+			});
+		});
 	}
+
  
 }
 
