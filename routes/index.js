@@ -63,6 +63,8 @@ exports = module.exports = function(app) {
 	app.post('/categories/get', routes.apis.categories.get);
 	app.get('/search/categories', routes.views.search.categories.view);
 	app.get('/search', routes.views.search.search);
+	app.get('/updatepoint/:postid/:action',routes.apis.point);
+
 
 	//challenge
 	app.get('/challenge/view', routes.views.challenge.challenge.view);
