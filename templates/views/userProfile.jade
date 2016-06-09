@@ -11,18 +11,22 @@ block body
 		.col-xs-12.reset-style
 			form#user-profile-form(action="#", method="POST", onsubmit="onUserProfileFormSubmit").row.clear-margin
 				.col-xs-6.reset-style
+					.col-xs-12.clear-margin
+						.form-group
+							label Username
+							input(type="text", name="lastname", value = user.username).form-control
 					.col-xs-6.clear-margin
 						.form-group
 							label First Name
-							input(type="text", name="firstname", value = "").form-control
+							input(type="text", name="firstname", value = user.name.first).form-control
 					.col-xs-6.clear-margin
 						.form-group
 							label Last Name
-							input(type="text", name="lastname", value = "").form-control
+							input(type="text", name="lastname", value = user.name.last).form-control
 					.col-xs-12.clear-margin
 						.form-group
 							label Email
-							input(type="email", name="email", placeholder="haha@gmail.com").form-control
+							input(type="email", name="email", value=user.email).form-control
 						.form-group
 							a#change-password-btn(href="#") Change Password
 						#change-password-form(style="display:none")

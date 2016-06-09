@@ -26,7 +26,9 @@ Course.add({
 	isPaid: {type: Types.Boolean},
 	price: {type: Types.Text},
 	courseraType: {type: Types.Text},
-	category: {type: Types.TextArray}
+	category: {type: Types.TextArray},
+	taxonomies: {type: Types.TextArray},
+	tags: {type: Types.TextArray}
 });
 /*
 Course.schema.add({

@@ -37,6 +37,7 @@ exports = module.exports = function(app) {
 	
 	// Views
 	app.get('/', routes.views.index);
+	app.get('/index/:type', routes.views.index);
 	app.get('/postCreate', routes.views.postCreate);
 	
 	app.all('/signin',routes.views.session.signin);

@@ -6,7 +6,8 @@ exports = module.exports = function(req, res) {
 	
 	var view = new keystone.View(req, res);
 	var locals = res.locals;
-	
+	var type = req.params.type || null;
+
 	// locals.section is used to set the currently selected
 	// item in the header navigation.
 	locals.section = 'home';
@@ -75,9 +76,6 @@ exports = module.exports = function(req, res) {
 				
 				locals.data.contentList = locals.data.contentList.concat(challenges);
 				locals.data.contentList = locals.data.contentList.sort(function(a,b) {
-			    console.log(a.createdAt);
-			    console.log(b.createdAt);
-			    console.log("--------");
 			    return (a.createdAt < b.createdAt) 
 			      ? 1 : (a.createdAt > b.createdAt) ? -1 : 0;
 			  });

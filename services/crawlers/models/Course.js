@@ -17,7 +17,8 @@ var courseSchema = new Schema({
   isPaid: {type: Boolean},
   price: {type: String},
   courseraType: {type: String},
-  test: []
+  taxonomies: [],
+  tags: []
 });
 var Course = mongoose.model('Course',courseSchema);
 
