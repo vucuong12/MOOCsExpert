@@ -119,9 +119,19 @@ module.exports = {
         if (err){
           res.json({success:false});
         } else {
-          takeCourse(req, res, challenge.source, challenge.cid, user._id, function(err){
+          //Create new notification
+          var notiBody = {
+            userId: (user._id == challenge.secondUserId)? challenge.firstUserId:challenge.secondUserId,
+            content: "New proposed time from your friend",
+            link: "/challenge/view?id=" + challenge._id
+          } 
+          var newNoti = new Notification.model(notiBody);
+          newNoti.save(function(err){
             if(err) return res.json({success:false})
-            return res.json({success:true, challengeId:challenge._id});
+            takeCourse(req, res, challenge.source, challenge.cid, user._id, function(err){
+              if(err) return res.json({success:false})
+              return res.json({success:true, challengeId:challenge._id});
+            })
           })
         }
 

@@ -1,8 +1,8 @@
 extends ../layouts/default
 block css
-	link(href="styles/landing.css", rel="stylesheet")
+	link(href="/styles/landing.css", rel="stylesheet")
 block js
-	script(src="js/landing.js")
+	script(src="/js/landing.js")
 
 
 mixin displayContent(content)
@@ -57,28 +57,13 @@ block body
 					
 		#center-panel.col-xs-7
 			#center-part.clearfix
-				form.service-select.clearfix
-					.col-xs-12
-						h4 Filter
-					.col-xs-6
-						.row
-							.col-xs-6
-								input(type="radio", name = "peopleRange", value="MyFriends")
-								| <strong> MyFriends </strong>
-							.col-xs-6
-								input(type="radio", name = "peopleRange", value="Discover")
-								| <strong> Discover </strong>
-						hr
-						.row
-							.col-xs-6
-								input(type="checkbox", name = "peopleRange", value="Posts")
-								| <strong> Posts </strong>
-							.col-xs-6
-								input(type="checkbox", name = "peopleRange", value="Challenges")
-								| <strong> Challenges </strong>
-					.col-xs-6.submit-section
-						center
-							button(type="submit")#filter-submit-button Go !
+				.service-select.clearfix
+					center
+						a(href="/index/friends")
+							button.btn.btn-success(style="width: 49.5%") You Friends
+						a(href="/index/discover")
+							button.btn.btn-info(style="width: 49.5%") Discover
+					
 				.newline
 				div.main-content.clearfix
 					if !user

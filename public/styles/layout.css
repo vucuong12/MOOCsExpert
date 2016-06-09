@@ -30,6 +30,11 @@ body {
 
 #header .navbar-brand, #header a{
   color: white !important;
+
+}
+
+#noti-drop-menu a:hover {
+    background-color: green;
 }
 
 // @media (min-width: 992px){
