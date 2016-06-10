@@ -2,5 +2,6 @@
 
 $(document).ready(function() {
   var $content = $(content);
-  $("#post-content").append($content);
+  //console.log(content);
+  //$("#post-content").append($content);
 })

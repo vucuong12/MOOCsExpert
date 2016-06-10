@@ -5,13 +5,14 @@ var async = require('async');
 var udemyName = 'y7z9E7NnzXJzMMvHXi3opJReg5iLAEibmy0c7zD2',
     udemyPassword = 'lA8TJhj2UO6Kf4af5ldbwnIcXPz6756FWgur1BRca3YeBMs3sFUrb0kqqEomEJ5t86jXrI1LsG80cppNiMNjoDsuM5S19MnfeZ2F8IJjaTEImuEoHsiiVoFQpCSPdX1g';
 
-
+var updateRecommendationForUsers = require("../../../services/recommendation/updateRecommendationForUsers.js");
 
 exports = module.exports = function(req, res) {
   var view = new keystone.View(req, res);
   var locals = res.locals;
   var query = req.query.query;
   var type = req.query.type;
+  var user = req.user;
     // locals.section is used to set the currently selected
   // item in the header navigation.
   locals.section = 'search';
@@ -27,13 +28,19 @@ exports = module.exports = function(req, res) {
         locals.query = query;
         locals.type = "normalSearch";
         next();
+        //update searchTags for the user
+        if (user){
+          updateRecommendationForUsers.updateOnNewSearch(user._id, query, function(err){
+            console.log("done with updateOnNewSearch (2)  ");
+          })
+        }
+        
       })
     } else if (type==="user") {
       keystone.list("User").model.find({
         username: new RegExp("\\b"+query+".*?\\b", "i")
       })
       .exec(function(err, results) {
-        console.log(results);
         locals.users = results;
         locals.query = query;
         next();

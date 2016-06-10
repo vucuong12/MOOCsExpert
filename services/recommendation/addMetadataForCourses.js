@@ -1,8 +1,8 @@
 //RUN IT BY "node addMetadataForCourse.js"
 var request = require("request");
-//var API_KEY = "d14d86f21eae0c49a5dee9d7b9735e5d7f0e456d";
- //var API_KEY = "a611d912dbd05e02ecdc9b0b6124b4aa593adeba";
-var API_KEY = "471ccf386c13f586b9872de945f4834b390a0807";
+var API_KEY = "d14d86f21eae0c49a5dee9d7b9735e5d7f0e456d";
+//var API_KEY = "a611d912dbd05e02ecdc9b0b6124b4aa593adeba";
+//var API_KEY = "471ccf386c13f586b9872de945f4834b390a0807";
 
 
 function getTagsByWaston(query, type,callback) {
@@ -37,8 +37,14 @@ function getTagsByWaston(query, type,callback) {
         if (response.statusCode == 200) {
           body = JSON.parse(body);
           if (body.status === 'OK') {
-            for (var index in body.keywords) {
-              var keyword = body.keywords[index];
+            var attribute;
+            if (type === 'url')
+              attribute = "concepts"
+            else
+              attribute = "keywords";
+
+            for (var index in body[attribute]) {
+              var keyword = body[attribute][index];
               if (keyword.relevance > 0.6) {
                 result.push(keyword.text);
               }
@@ -106,18 +112,19 @@ function getTaxonomyByWaston(query,callback) {
 
 var mongoose = require('mongoose');
 var mongodbAdd = /*"52.39.232.71" || */"127.0.0.1";
-mongoose.connect('mongodb://' + mongodbAdd + ':27017/moocsexpert');
 var Course = require('../crawlers/models/Course');
 
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function() {
-  console.log("Opened mongoose at mongodbAdd " + mongodbAdd);
-  updateOnlyTitle();
-  /*var array1 = ["a b c", "x y", "m n"];
-  var array2 = ["c m", "t z", "n u"];
-  console.log(findSimilarPointForTitle(array1, array2));*/
-});
+/*Uncomment to RUN*/
+// mongoose.connect('mongodb://' + mongodbAdd + ':27017/moocsexpert');
+// var db = mongoose.connection;
+// db.on('error', console.error.bind(console, 'connection error:'));
+// db.once('open', function() {
+//   console.log("Opened mongoose at mongodbAdd " + mongodbAdd);
+//   //updateOnlyTitle();
+//   /*var array1 = ["a b c", "x y", "m n"];
+//   var array2 = ["c m", "t z", "n u"];
+//   console.log(findSimilarPointForTitle(array1, array2));*/
+// });
 
 function addToArray(array1, array2){
   for (var i = 0; i < array2.length; i++){
@@ -231,3 +238,9 @@ function findSimilarPointForTitle(sampleTitleTags, targetTitleTags){
   });
   return intersectionArray.length;
 }
+
+
+
+
+// Export extract tags from url or text 
+module.exports.getTagsByWaston = getTagsByWaston;

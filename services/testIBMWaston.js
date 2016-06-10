@@ -45,6 +45,6 @@ function getConceptsByWaston(query,callback) {
   
 }
 
-getConceptsByWaston("https://www.coursera.org/course/techethics", function(err, newQuery){
+getConceptsByWaston("http://110.76.94.231:3000/post?postId=575a7abf9a2adbf72dc879b3", function(err, newQuery){
   console.log(newQuery);
 })

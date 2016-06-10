@@ -56,7 +56,6 @@ exports = module.exports  = function(req, res){
         if (err) {
           console.error(err);
         }
-        console.log(locals.courseList);
         next();
       })
     })

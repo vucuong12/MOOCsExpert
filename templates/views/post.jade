@@ -20,7 +20,7 @@ block body
           .vote-number(style="padding-left:3px" id=myPost._id+"point")= myPost.point
           .downvote-btn
             i(class="fa fa-caret-down" style="font-size:40px" onclick="downvote('"+myPost._id+"')")
-        #post-content.col-xs-11.no-float
+        #post-content.col-xs-11.no-float!= myPost.content
         
 
         
@@ -28,7 +28,7 @@ block body
         h5 created at: #{myPost._.createdAt.format('YYYY-MM-DD')}
         h5 views: 0
         | author: 
-        a(href="#") #{user.username}
+        a(href="#") #{postAuthor}
     .col-xs-1
 
 

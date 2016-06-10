@@ -42,9 +42,12 @@ User.add({
 	recommendedPosts: {type: Types.TextArray},
 	interestedTaxonomies: {type: Types.TextArray},
 	interestedTags: {type: Types.TextArray},
-	interestedTitleTags: {type: Types.TextArray},
-	courseTags: {type: Types.TextArray}
+	interestedTitleTags: {type: Types.TextArray, default: []},
+	courseTags: {type: Types.TextArray},
+	postTags: {type: Types.TextArray},
+	searchTags: {type: Types.TextArray},
 	totalPoint: {type: Types.Number, default: 0},
+	topRelatedUsers: {type: Types.TextArray},
 }, 'Permissions', {
 	isAdmin: { type: Boolean, label: 'Can access Keystone', index: true }
 });

@@ -6,7 +6,7 @@ exports = module.exports = function(req, res) {
 	
 	var view = new keystone.View(req, res);
 	var locals = res.locals;
-	var type = req.params.type || null;
+	var type = req.params.type || "none";
 	var user = req.user;
 
 	// locals.section is used to set the currently selected
@@ -28,42 +28,115 @@ exports = module.exports = function(req, res) {
 	view.on('init',function(next){
 		if (locals.data.currentUser.followingPeopleIds){
 			locals.data.friendIds = locals.data.currentUser.followingPeopleIds;
-		}	
+		}
+
 		next();
 	});
 
 
 	// Load the posts
 	view.on('init', function(next) {
-		var q = keystone.list('MyPost').model.find({
-				userId:{$in: locals.data.friendIds}	
-			})
-			.sort({createdAt:'desc'})
-			.limit(20);
-		
-		q.exec(function(err, results) {
-			results = results || [];
-			for (var i in results){
-				results[i].type = "post";
-			}
-			locals.data.contentList = results || [];
-			next(err);
-		});
+    if (user) console.log(1); 
+    else console.log(2);
+    if (user && (type === "none" || type === "friends")){
+      var q = keystone.list('MyPost').model.find({
+        userId:{$in: locals.data.friendIds} 
+      })
+      .sort({createdAt:'desc'})
+      .limit(20);
+    
+      q.exec(function(err, results) {
+        results = results || [];
+        for (var i in results){
+          results[i].type = "post";
+        }
+        locals.data.contentList = results || [];
+        next(err);
+      });
+    } else if (!user) {
+      console.log("Hahaha");
+      keystone.list("MyPost").model.find({})
+      .sort({createdAt:'desc'})
+      .limit(20).exec(function(err, results){
+        results = results || [];
+        for (var i in results){
+          results[i].type = "post";
+        }
+        locals.data.contentList = results || [];
+        next(err);
+      });
+    } else {
+      return next();
+    }
 		
 	});
 
+  //Load related posts
+  view.on('init', function(next) {
+    if (!user || type !== "discover") return next();
+    var numTags = 1;
+    var firstMatch = {};
+    if (numTags > 0)
+      firstMatch["tags."+Math.min(numTags-1, 2)] = { "$exists": true }
+    else return next();
+    keystone.list("MyPost").model.aggregate(
+      [ 
+        { "$match":  firstMatch},
+        //{ "$match": {"source":{$ne:"Coursera"}}}, 
+        { "$redact": { 
+          "$cond": [ 
+            { "$gte": [ 
+                { "$size": { "$setIntersection": [ "$tags", user.interestedTags ] } }, 
+                numTags
+            ]},
+            "$$KEEP", 
+            "$$PRUNE" 
+          ]
+        }}
+      ]
+    ).exec(function(err, myPosts){
+      if (!myPosts) return next();
+      console.log("relatedPost " + myPosts.length);
+      if (myPosts.length > 0){
+        myPosts.sort(function(a,b){
+          return findSimilarPoint(b.tags, user.interestedTags)
+          - findSimilarPoint(a.tags, user.interestedTags);
+        })
+        
+        myPosts = myPosts || [];
+        for (var i in myPosts){
+          myPosts[i].type = "post";
+        }
+        //console.log(myPosts[0]._.createdAt.format('MMMM Do, YYYY'));
+        locals.data.contentList = myPosts || [];
+        next(err);
+      } else {
+        keystone.list("MyPost").model.find({})
+          .sort({createdAt:'desc'})
+          .limit(20).exec(function(err, results){
+            results = results || [];
+            for (var i in results){
+              results[i].type = "post";
+            }
+            locals.data.contentList = results || [];
+            next(err);
+          });
+      }
+      
+      
+    })
+  });
+
 	// Load the challenges
 	view.on('init', function(next) {
-
-		var q = keystone.list('Challenge').model.find({
-				firstUserId:{$in: locals.data.friendIds},
-				state:"PENDING"
-			})
+    var query = {state:"PENDING", secondUserId: null};
+    if (user && type !== "discover") query.firstUserId = {$in: locals.data.friendIds};
+		var q = keystone.list('Challenge').model.find(query)
 			.sort({createdAt:'desc'})
 			.limit(20);
 		
 		q.exec(function(err, challenges) {
-			
+			console.log(type + JSON.stringify(query) + " " + challenges.length);
 			challenges = challenges || [];
 			//Load challenge creators
 			async.each(challenges,
@@ -141,23 +214,30 @@ exports = module.exports = function(req, res) {
     	if (!recommendedCourses) return next();
     	if (user.interestedTitleTags.length > 0){
     		var randomCourseTitleTags = JSON.parse(user.interestedTitleTags[randomCourseIndex]);
-		  	console.log("Random Course");
-		  	console.log(randomCourseTitleTags);
-		  	console.log(randomCourseTitleTags.length);
+
 		  	recommendedCourses.sort(function(a,b){
-		  		return (findSimilarPointForTitle(randomCourseTitleTags,b.titleTags) 
-		  			    - findSimilarPointForTitle(randomCourseTitleTags,a.titleTags))
+          a.titleTags = a.titleTags || [];
+          b.titleTags = b.titleTags || [];
+		  		return (findSimilarPoint(randomCourseTitleTags,b.titleTags) 
+		  			    - findSimilarPoint(randomCourseTitleTags,a.titleTags))
 		  	})
     	}
 	  	
     	//shuffle(recommendedCourses);
     	locals.recommendedCourses = recommendedCourses.slice(0,10);
-    	for (var i in recommendedCourses){
-    		console.log(recommendedCourses[i].tags);
-    	}
       next(err);
     })
 	})
+  //Load related users
+  view.on('init', function(next) {
+    if (!user) return next();
+    locals.relatedUsers = user.topRelatedUsers || [];
+    for (var i = 0; i < locals.relatedUsers.length; i++){
+      locals.relatedUsers[i] = JSON.parse(locals.relatedUsers[i]);
+    }
+    return next();
+  });
+
 
 
 	//load the users with most point on their profile: mostReputedUsers
@@ -198,13 +278,13 @@ function shuffle(array) {
 
 function transformToArrayOfWords(titleTags){
 	var result = [];
-	for (var i in titleTags){
+	for (var i = 0; i < titleTags.length; i++){
 		result = result.concat(titleTags[i].split(" "));
 	}
 	return result
 }
 
-function findSimilarPointForTitle(sampleTitleTags, targetTitleTags){
+function findSimilarPoint(sampleTitleTags, targetTitleTags){
 	var tagArray1 = transformToArrayOfWords(sampleTitleTags);
 	var tagArray2 = transformToArrayOfWords(targetTitleTags);
 	var intersectionArray = tagArray1.filter(function(n) {
@@ -213,10 +293,10 @@ function findSimilarPointForTitle(sampleTitleTags, targetTitleTags){
 	return intersectionArray.length;
 }
 
-function findSimilarPointForTitleArray(titleTagsArray, targetTitleTags){
+function findSimilarPointArray(titleTagsArray, targetTitleTags){
 	var result = 0;
 	for (var i in titleTagsArray){
-		result = Math.max(result, findSimilarPointForTitle(titleTagsArray[i], targetTitleTags));
+		result = Math.max(result, findSimilarPoint(titleTagsArray[i], targetTitleTags));
 	}
 	return result;
 }
