@@ -7,7 +7,7 @@ function getConceptsByWaston(query,callback) {
     var newQuery = '';
     var dataForm = {
       url: query,
-      apikey: "a611d912dbd05e02ecdc9b0b6124b4aa593adeba",//"471ccf386c13f586b9872de945f4834b390a0807",
+      apikey: "d14d86f21eae0c49a5dee9d7b9735e5d7f0e456d",//"471ccf386c13f586b9872de945f4834b390a0807",
       outputMode: 'json',
       maxRetrieve: 8,
       linkedData: 0,

@@ -84,3 +84,8 @@ block body
 			#right-part.clearfix
 				aside.ranking-section
 					h4.rank-header Ranking
+					if (recommendedCourses)
+						.recommended-course
+							each recCourse in recommendedCourses
+								a(href="course?source=" + recCourse.source + "&id=" + recCourse.cid)
+									h4= recCourse.title

@@ -18,7 +18,8 @@ var courseSchema = new Schema({
   price: {type: String},
   courseraType: {type: String},
   taxonomies: [],
-  tags: []
+  tags: [],
+  titleTags: []
 });
 var Course = mongoose.model('Course',courseSchema);
 

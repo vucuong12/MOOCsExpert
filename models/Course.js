@@ -28,7 +28,8 @@ Course.add({
 	courseraType: {type: Types.Text},
 	category: {type: Types.TextArray},
 	taxonomies: {type: Types.TextArray},
-	tags: {type: Types.TextArray}
+	tags: {type: Types.TextArray},
+	titleTags: {type: Types.TextArray}
 });
 /*
 Course.schema.add({

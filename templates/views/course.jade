@@ -5,7 +5,8 @@ block js
   script(src="js/course.js", type="text/javascript")
 block body
   script.
-    var course = !{JSON.stringify(course)};
+    var cid = !{JSON.stringify(course.cid)};
+    var source = !{JSON.stringify(course.source)};
     var alreadyTaken = !{JSON.stringify(alreadyTaken)}
   #course-page.container-fluid:.row
     #course-left-panel.col-xs-1

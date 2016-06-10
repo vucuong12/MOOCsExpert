@@ -37,7 +37,13 @@ User.add({
 	myCourses: {type: Types.TextArray},
 	myPosts: {type: Types.TextArray},
 	myChallenges: {type: Types.TextArray},
-	profilePicture: {type: Types.Text, default:"http://www.twiisty.com/Uploads/Profile/default_profile_pic.png"}
+	profilePicture: {type: Types.Text, default:"http://www.twiisty.com/Uploads/Profile/default_profile_pic.png"},
+	recommendedCourses: {type: Types.TextArray},
+	recommendedPosts: {type: Types.TextArray},
+	interestedTaxonomies: {type: Types.TextArray},
+	interestedTags: {type: Types.TextArray},
+	interestedTitleTags: {type: Types.TextArray},
+	courseTags: {type: Types.TextArray}
 }, 'Permissions', {
 	isAdmin: { type: Boolean, label: 'Can access Keystone', index: true }
 });

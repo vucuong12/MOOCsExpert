@@ -32,3 +32,6 @@ Need to comment out line: ip_bound in /etc/mongod.conf (in server)
 http://stackoverflow.com/questions/14653938/remotely-connecting-to-mongodb-http-interface-on-ec2-server.
 
 Also, add MONGODB_ADD in .env file (environment variable)
+
+8. copy mongodb from 110.76.94.231:27017w
+db.copyDatabase("keystone-test","testcopy1","110.76.94.231:27017")

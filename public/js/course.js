@@ -9,8 +9,8 @@ $("#take-course-btn").click(function(){
   }
   var data = {
     userId : user._id,
-    source : course.source,
-    cid : course.cid
+    source : source,
+    cid : cid
   }
   post(TAKE_COURSE_ENDPOINT, data, function(data){
     if (data.success === true){
@@ -25,14 +25,14 @@ $("#create-post-btn").click(function(){
   if (!alreadyTaken) {
     return alert("You need to take this course first !");
   }
-  window.location.href = "/postCreate?source=" + course.source + "&cid=" + course.cid;
+  window.location.href = "/postCreate?source=" + source + "&cid=" + cid;
 })
 
 $("#create-challenge-btn").click(function(){
   if (!alreadyTaken) {
     return alert("You need to take this course first !");
   }
-  window.location.href = "/challenge/create?source="+course.source + "&id="+course.cid;
+  window.location.href = "/challenge/create?source="+source + "&id="+cid;
 })
 
 $(document).ready(function() {
