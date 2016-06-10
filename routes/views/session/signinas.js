@@ -30,7 +30,7 @@ exports = module.exports = function(req, res) {
 	}
 
 
-	User.model.findOne({username:req.body.username},function(err,user){
+	User.model.findOne({email:req.body.email},function(err,user){
 		//register
 		if (!user) {
 			var userData = {

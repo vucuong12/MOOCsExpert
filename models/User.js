@@ -44,6 +44,7 @@ User.add({
 	interestedTags: {type: Types.TextArray},
 	interestedTitleTags: {type: Types.TextArray},
 	courseTags: {type: Types.TextArray}
+	totalPoint: {type: Types.Number, default: 0},
 }, 'Permissions', {
 	isAdmin: { type: Boolean, label: 'Can access Keystone', index: true }
 });

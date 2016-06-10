@@ -17,7 +17,7 @@ MyPost.add({
   content: {type: Types.Text},  
   userId: {type: Types.Text},  //_id field
   createdAt: { type: Date, default: Date.now },
-  point: {type: Types.Number},
+  point: {type: Types.Number, default: 0},
   commentIds: {type: Types.Text},     //[]
   title: {type: Types.Text}
 });

@@ -20,6 +20,7 @@ exports = module.exports = function(req, res) {
 		//for furthur work with user, use this current user
 		contentList: [],
 		friendIds: [],
+		mostReputedUsers: []
 	};
 
 
@@ -104,6 +105,7 @@ exports = module.exports = function(req, res) {
 		});
 	});
 
+
 	// Load the course recommendation for this user
 	view.on("init", function(next){
 		if (!user || user.courseTags.length === 0) return next();
@@ -156,6 +158,17 @@ exports = module.exports = function(req, res) {
       next(err);
     })
 	})
+
+
+	//load the users with most point on their profile: mostReputedUsers
+
+	view.on('init', function(next) {
+		keystone.list('User').model.find({}).sort({totalPoint:'desc'}).limit(6)
+		.exec(function(err,users){
+			locals.data.mostReputedUsers=users;
+			next();
+		})
+	});
 
 
 

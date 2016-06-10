@@ -59,10 +59,16 @@ exports = module.exports = function(app) {
 	app.get('/post', routes.views.social.post.view);
 	app.get('/user/:username/action/:user_action',routes.apis.follow);  //follow unfollow
 	app.get('/user/:username', routes.views.social.user.view);  //view other user page/profile
+	app.get('/user/:username/update_stats',routes.views.social.user.update_stats);  //update calculation, total point of a user
 	app.get('/user/:username/:follow',routes.views.social.user.follow); 
+
+
 	app.post('/categories/get', routes.apis.categories.get);
 	app.get('/search/categories', routes.views.search.categories.view);
 	app.get('/search', routes.views.search.search);
+	app.get('/updatepoint/:postid/:action',routes.apis.point);
+
+
 
 	//challenge
 	app.get('/challenge/view', routes.views.challenge.challenge.view);

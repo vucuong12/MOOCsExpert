@@ -3,21 +3,23 @@ block css
   link(href="styles/post.css", rel="stylesheet")
 block js
   script(src="js/post.js", type="text/javascript")
+  script(src="/js/apicall/pointsystem.js", type="text/javascript")
 block body
   script.
     var content = !{JSON.stringify(myPost.content)}
   #post-page.container-fluid:.row
     #post-left-panel.col-xs-1
     #post-main-panel.col-xs-10
-      h3#post-title= myPost.title
+      a(href="/post?postId="+myPost._id)
+        h3#post-title= myPost.title
       hr.thick-hr
       #post-center-panel.col-xs-9
         #post-vote.col-xs-1.no-float
           .upvote-btn
-            <i class="fa fa-caret-up" style="font-size:40px"></i>
-          .vote-number(style="padding-left:3px")= 12
+            i(class="fa fa-caret-up" style="font-size:40px" onclick="upvote('"+myPost._id+"')" )
+          .vote-number(style="padding-left:3px" id=myPost._id+"point")= myPost.point
           .downvote-btn
-            <i class="fa fa-caret-down" style="font-size:40px"></i>
+            i(class="fa fa-caret-down" style="font-size:40px" onclick="downvote('"+myPost._id+"')")
         #post-content.col-xs-11.no-float
         
 
