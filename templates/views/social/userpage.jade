@@ -50,7 +50,7 @@ block body
           .row
             h2 User 
               strong #{data.targetUser.username}
-          if (data.targetUser.username !== user.username)
+          if (user && data.targetUser.username !== user.username)
             .row
               if (data.alreadyFollowing==false)
                 button(type="button" class="btn btn-primary" id="follow-button" onclick="followUser()") Follow

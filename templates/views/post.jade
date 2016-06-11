@@ -15,11 +15,14 @@ block body
       hr.thick-hr
       #post-center-panel.col-xs-9
         #post-vote.col-xs-1.no-float
+          - myPost.upvoteUserIds = myPost.upvoteUserIds || [];
+          - myPost.downvoteUserIds =  myPost.downvoteUserIds || [];
+
           .upvote-btn
-            i(class="fa fa-caret-up" style="font-size:40px" onclick="upvote('"+myPost._id+"')" )
-          .vote-number(style="padding-left:3px" id=myPost._id+"point")= myPost.point
+            i(class="fa fa-caret-up", style="font-size:40px;cursor: pointer;" +  ((!user || myPost.upvoteUserIds.indexOf(user._id) == -1)? "color:black":"color:#00689b"), onclick="upvote('"+myPost._id+"', this)" )#upvote-icon1
+          .vote-number(style="padding-left:7.5px" id=myPost._id+"point")= myPost.point
           .downvote-btn
-            i(class="fa fa-caret-down" style="font-size:40px" onclick="downvote('"+myPost._id+"')")
+            i(class="fa fa-caret-down", style="font-size:40px;cursor: pointer;"+((!user || myPost.downvoteUserIds.indexOf(user._id) == -1)? "color:black":"color:#00689b"),onclick="downvote('"+myPost._id+"', this)")#downvote-icon1
         #post-content.col-xs-11.no-float!= myPost.content
         
 
@@ -28,7 +31,7 @@ block body
         h5 created at: #{myPost._.createdAt.format('YYYY-MM-DD')}
         h5 views: 0
         | author: 
-        a(href="/user/"+user.username) #{user.username}
+        a(href="/user/"+postAuthor) #{postAuthor}
     .col-xs-1
 
 

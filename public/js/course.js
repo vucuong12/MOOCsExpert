@@ -22,6 +22,9 @@ $("#take-course-btn").click(function(){
 })
 
 $("#create-post-btn").click(function(){
+  if (!user){
+    return window.location.href = "/signin";
+  }
   if (!alreadyTaken) {
     return alert("You need to take this course first !");
   }
@@ -29,6 +32,9 @@ $("#create-post-btn").click(function(){
 })
 
 $("#create-challenge-btn").click(function(){
+  if (!user){
+    return window.location.href = "/signin";
+  }
   if (!alreadyTaken) {
     return alert("You need to take this course first !");
   }
