@@ -2,7 +2,7 @@ extends ../layouts/default
 block css
   link(href="styles/post.css", rel="stylesheet")
 block js
-  script(src="js/post.js", type="text/javascript")
+  script(src="/js/post.js", type="text/javascript")
   script(src="/js/apicall/pointsystem.js", type="text/javascript")
 block body
   script.
@@ -28,7 +28,7 @@ block body
         h5 created at: #{myPost._.createdAt.format('YYYY-MM-DD')}
         h5 views: 0
         | author: 
-        a(href="#") #{postAuthor}
+        a(href="/user/"+user.username) #{user.username}
     .col-xs-1
 
 

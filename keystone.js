@@ -10,7 +10,9 @@ var keystone = require('keystone');
 // See http://keystonejs.com/guide/config for available options
 // and documentation.
 
-var mongodb_uri = process.env.MONGODB_ADD || "127.0.0.1:";
+
+var mongodb_uri = process.env.MONGODB_ADD || "127.0.0.1";
+
 
 keystone.init({
 	'name': 'moocsexpert',

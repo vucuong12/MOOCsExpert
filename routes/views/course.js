@@ -9,6 +9,9 @@ exports = module.exports = function(req, res) {
   var courseSource = req.query.source;
   var courseId = req.query.id;
   locals.user = req.user || null;
+  locals.data = {
+    posts:[]
+  }
 
   view.on('init', function(next ) {
     var promise = keystone.list("Course").model.findOne({source: courseSource, cid: courseId});
@@ -18,7 +21,6 @@ exports = module.exports = function(req, res) {
       if (course.source === "Coursera"){
         course.description = course.description.replace("<p>", "");
         course.description = course.description.replace("</p>", "");
-
       }
       locals.course = course;
       if (locals.user)
@@ -36,6 +38,21 @@ exports = module.exports = function(req, res) {
       else 
         next();
     })  
-  })  
+  });
+  view.on('init', function(next ) {
+    keystone.list("MyPost").model.find({cid:courseId, source: courseSource})
+    .exec(function(err,posts){
+      locals.data.posts=posts;
+      async.each(locals.data.posts,function(post,cb){
+        keystone.list("User").model.findOne({_id:post.userId})
+        .exec(function(err,res_user){
+          post.author = res_user;
+          cb();
+        });
+      },function(err){
+        next();
+      });
+    }); 
+  }); 
   view.render('course');
 };
