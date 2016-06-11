@@ -1,8 +1,43 @@
 extends ../layouts/default
 block css
   link(href="styles/course.css", rel="stylesheet")
+  link(href="/styles/post.css", rel="stylesheet")
 block js
   script(src="js/course.js", type="text/javascript")
+  script(src="/js/apicall/pointsystem.js", type="text/javascript")
+  
+
+
+mixin post(index,post)
+  .container-fluid:.row.post-wrapper
+    .col-xs-11
+      a(href="/post?postId="+post._id)
+        h3= post.title
+      hr.thick-hr
+      .col-xs-9
+        .col-xs-1.no-float
+          .upvote-btn
+            i(class="fa fa-caret-up" style="font-size:40px" onclick="upvote('"+post._id+"')" )
+          .vote-number(style="padding-left:3px" id=post._id+"point")= post.point
+          .downvote-btn
+            i(class="fa fa-caret-down" style="font-size:40px" onclick="downvote('"+post._id+"')")
+        .col-xs-11.no-float!= post.content
+        
+      .col-xs-3
+        h5 created at: #{post._.createdAt.format('YYYY-MM-DD')}
+        | author: 
+        a(href="/user/"+post.author.username) #{post.author.username}
+        if post.courseTitle
+          p.small
+            | About Course 
+            a(href="/course?source="+post.source+"&id="+post.cid)=post.courseTitle
+          if post.lessionName
+            |, in section
+            a(href="/course?source="+post.source+"&id="+post.cid)=post.lessionNumber+post.lessionName
+    .col-xs-1
+  .newline
+
+
 block body
   script.
     var cid = !{JSON.stringify(course.cid)};
@@ -53,7 +88,9 @@ block body
         hr
         hr
         hr
-      
+        
+      each post,index in data.posts
+        +post(index,post)
         
                  
     #course-right-panel.col-xs-1
