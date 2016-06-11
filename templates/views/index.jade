@@ -16,7 +16,10 @@ mixin displayContent(content)
 				.col-xs-8.metadata
 					div
 						a(href="/user/"+content.postAuthor.username)= content.postAuthor.username
-						i(style="margin-left: 20px;") Created at #{content._.createdAt.format('MMMM Do, YYYY')}
+						- var date = new Date(content.createdAt);
+
+
+						i(style="margin-left: 20px;") Created at #{date.toDateString()}
 					div
 						h5.inline-ele Course:  
 						a(href="/course?source="+content.source + "&id="+content.cid)=content.courseTitle
@@ -75,24 +78,13 @@ block body
 					
 				.newline
 				div.main-content.clearfix
-					if !user
-						.col-xs-12.content-item
-							p How does the distressed public sight the relief? Whatever cylinder exercises underneath the center. How does a glove breeze? A feeling arm locates the guaranteed coast. A nurse impairs this crowd. The temporary radio escapes in the editorial.
-						.newline
-						.col-xs-12.content-item
-							p How does the distressed public sight the relief? Whatever cylinder exercises underneath the center. How does a glove breeze? A feeling arm locates the guaranteed coast. A nurse impairs this crowd. The temporary radio escapes in the editorial.
-						.newline
-						.col-xs-12.content-item
-							p How does the distressed public sight the relief? Whatever cylinder exercises underneath the center. How does a glove breeze? A feeling arm locates the guaranteed coast. A nurse impairs this crowd. The temporary radio escapes in the editorial.
-						.newline
-					else
-						each content in data.contentList
+					
+					each content in data.contentList
 							+displayContent(content)
 
 		#right-panel.col-xs-3
 			#right-part.clearfix
 				aside.ranking-section
-					h4.rank-header Ranking
 					.content-tiem
 						h4.rank-header Reputation Ranking
 						.container-float
@@ -114,4 +106,9 @@ block body
 							each recCourse in recommendedCourses
 								a(href="course?source=" + recCourse.source + "&id=" + recCourse.cid)
 									h4= recCourse.title
+					if (relatedUsers && relatedUsers.length > 0)
+						.related-users
+							each relatedUser in relatedUsers
+								a(href="/user/" + relatedUser.username)
+									h4= relatedUser.username
 

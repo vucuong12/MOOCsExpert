@@ -19,7 +19,10 @@ MyPost.add({
   createdAt: { type: Date, default: Date.now },
   point: {type: Types.Number, default: 0},
   commentIds: {type: Types.Text},     //[]
-  title: {type: Types.Text}
+  title: {type: Types.Text},
+  postTags: {type: Types.TextArray},
+  courseTags: {type: Types.TextArray},
+  tags: {type: Types.TextArray},
 });
 
 

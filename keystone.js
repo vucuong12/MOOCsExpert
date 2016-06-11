@@ -9,8 +9,9 @@ var keystone = require('keystone');
 // See http://keystonejs.com/guide/config for available options
 // and documentation.
 
+
 var mongodb_uri = process.env.MONGODB_ADD || "127.0.0.1";
-console.log(mongodb_uri);
+
 
 keystone.init({
 	'name': 'moocsexpert',
@@ -26,7 +27,7 @@ keystone.init({
 	'session': true,
 	'auth': true,
 	'user model': 'User',
-	'mongo': "mongodb://" + mongodb_uri +"/moocsexpert" 
+	'mongo': "mongodb://" + mongodb_uri +":27017/moocsexpert" 
 });
 
 // Load your project's Models

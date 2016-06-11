@@ -6,6 +6,7 @@
     "async": "^1.5.2",
     "cheerio": "^0.20.0",
     "dotenv": "^1.1.0",
+    "external-ip": "^0.2.4",
     "keystone": "^0.3.16",
     "mongoose": "^4.4.17",
     "request": "^2.72.0",
