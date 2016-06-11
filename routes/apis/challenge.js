@@ -4,6 +4,7 @@ var async = require('async');
 var Notification = keystone.list("Notification");
 var Challenge = keystone.list("Challenge");
 var MyCourse = keystone.list("MyCourse");
+var cron = require('node-cron');
 
 function takeCourse(req, res, source, cid, userId, callback){
   keystone.list("MyCourse").model.findOne({userId:userId, source:source,cid:cid}, function(err, mycourse){
@@ -172,7 +173,12 @@ module.exports = {
             if(err) return res.json({success:false})
             takeCourse(req, res, challenge.source, challenge.cid, user._id, function(err){
               if(err) return res.json({success:false})
-              return res.json({success:true, challengeId:challenge._id});
+              res.json({success:true, challengeId:challenge._id});
+              cron.schedule('* * * */7 * *', function(){
+                console.log('running a task every 7 days');
+                checkChallengeEveryWeek(challenge._id);
+              });
+                  
             })
           })
 
@@ -250,4 +256,51 @@ module.exports = {
   }
 }
 
+function checkChallengeEveryWeek(challengeId){
+  var thisDayLastWeek = new Date();
+  console.log(thisDayLastWeek);
 
+  //thisDayLastWeek.setDate(thisDayLastWeek - 7);
+  thisDayLastWeek.setSeconds(thisDayLastWeek.getSeconds() - 10);
+  console.log(thisDayLastWeek);
+  keystone.list("Challenge").model.findOne({_id: challengeId, state:"ON-GOING"}, function(err, challenge){
+    if (!challenge) return;
+    var firstUserId = challenge.firstUserId;
+    var secondUserId = challenge.secondUserId;
+    console.log(challenge);
+    keystone.list("MyPost").model.findOne({userId: firstUserId, source:challenge.source, cid:challenge.cid, createdAt:{$gt:thisDayLastWeek}}
+      , function(err, firstUserPost){
+        keystone.list("MyPost").model.findOne({userId: secondUserId, source:challenge.source, cid:challenge.cid, createdAt:{$gt:thisDayLastWeek}}
+          , function(err, secondUserPost){
+
+            if ((firstUserPost && secondUserPost) || (!firstUserPost && !secondUserPost )) 
+              return console.log("Checking a challenge: fair result.");
+            
+            keystone.list("User").model.find({_id: {$in: [firstUserId, secondUserId]}}, function(err,users){
+              if (users.length < 2){
+                return console.log("At least one of 2 users does not exist anymore")
+              }
+              if (users[1]._id == firstUserId){
+                var temp = users[0];
+                users[0] = users[1];
+                users[1] = temp;
+              }
+              if (!firstUserPost){
+                // the first user did not have any post this week
+                users[0].totalPoint = Math.max(0, users[0].totalPoint - 2);
+                users[1].totalPoint += 2;
+              } else {
+                // the second user did not have any post this week
+                users[1].totalPoint = Math.max(0, users[1].totalPoint - 2);
+                users[0].totalPoint += 2;
+              }
+              users[0].save(function(err){
+                users[1].save(function(err){
+                  console.log("Done checking challenge between 2 users");
+                })
+              })
+            })
+        })
+    })
+  })
+}

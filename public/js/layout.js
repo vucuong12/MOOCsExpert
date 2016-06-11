@@ -42,7 +42,7 @@ $("#search-box").autocomplete({
     },
     select: function (event, ui) {
         $("#search-box").val(ui.item.name);
-        window.location.href = "/user/" + ui.item.name;
+        window.location.href = "/user/" + encodeURIComponent(ui.item.name);
         return false;
     },
     open: function(){

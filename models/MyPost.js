@@ -23,6 +23,8 @@ MyPost.add({
   postTags: {type: Types.TextArray},
   courseTags: {type: Types.TextArray},
   tags: {type: Types.TextArray},
+  upvoteUserIds: {type: Types.TextArray},
+  downvoteUserIds: {type: Types.TextArray},
 });
 
 

@@ -19,6 +19,8 @@ block body
             button.btn.primary-btn Following
           a(href="/user/"+user.username+"/followed")
             button.btn.primary-btn Followed
+          a(href="/user/"+user.username)
+            button.btn.primary-btn Your public page
       .courseList
         each course in courseList
           .myPage-course.clearfix.fixed-box
@@ -28,6 +30,7 @@ block body
               center
                 label(style="padding-top:10px;") Number of Posts : 
                 | #{course.myPosts.length}
+            
             .col-xs-6
               center
                 label(style="padding-top:10px;") Number of Challenges : 
@@ -35,6 +38,7 @@ block body
                   | 1
                 else
                   | 0
+
             hr
             .col-xs-12
               h3 Posts

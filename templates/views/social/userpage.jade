@@ -17,11 +17,14 @@ mixin post(index,post)
       hr.thick-hr
       .col-xs-9
         .col-xs-1.no-float
+          - post.upvoteUserIds = post.upvoteUserIds || [];
+          - post.downvoteUserIds =  post.downvoteUserIds || [];
+
           .upvote-btn
-            i(class="fa fa-caret-up" style="font-size:40px" onclick="upvote('"+post._id+"')" )
-          .vote-number(style="padding-left:3px" id=post._id+"point")= post.point
+            i(class="fa fa-caret-up", style="font-size:40px;cursor: pointer;" +  ((!user || post.upvoteUserIds.indexOf(user._id) == -1)? "color:black":"color:#00689b"), onclick="upvote('"+post._id+"', this)" )#upvote-icon1
+          .vote-number(style="padding-left:7.5px" id=post._id+"point")= post.point
           .downvote-btn
-            i(class="fa fa-caret-down" style="font-size:40px" onclick="downvote('"+post._id+"')")
+            i(class="fa fa-caret-down", style="font-size:40px;cursor: pointer;"+((!user || post.downvoteUserIds.indexOf(user._id) == -1)? "color:black":"color:#00689b"),onclick="downvote('"+post._id+"', this)")#downvote-icon1
         .col-xs-11.no-float!= post.content
         
       .col-xs-3
@@ -46,12 +49,13 @@ block body
           .row
             h2 User 
               strong #{data.targetUser.username}
-          .row
-            if (data.alreadyFollowing==false)
-              button(type="button" class="btn btn-primary" id="follow-button" onclick="followUser()") Follow
-            else 
-              button(type="button" class="btn btn-warning" id="unfollow-button" onclick="unFollowUser()") Unfollow
-            button(type="button" class="btn btn-info" id="follow-button") Message
+          if (data.targetUser.username !== user.username)
+            .row
+              if (data.alreadyFollowing==false)
+                button(type="button" class="btn btn-primary" id="follow-button" onclick="followUser()") Follow
+              else 
+                button(type="button" class="btn btn-warning" id="unfollow-button" onclick="unFollowUser()") Unfollow
+              button(type="button" class="btn btn-info" id="follow-button") Message
         div(style="margin-top: 30px;")
           .col-xs-12
             .col-xs-8

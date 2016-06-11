@@ -34,4 +34,4 @@ http://stackoverflow.com/questions/14653938/remotely-connecting-to-mongodb-http-
 Also, add MONGODB_ADD in .env file (environment variable)
 
 8. copy mongodb from 110.76.94.231:27017w
-db.copyDatabase("keystone-test","testcopy1","110.76.94.231:27017")
+db.copyDatabase("moocsexpert","firstcopy","110.76.94.231:27017")

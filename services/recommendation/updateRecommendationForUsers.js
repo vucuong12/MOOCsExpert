@@ -93,11 +93,7 @@ function compareTwoSets(setA, setB){
   var setBminusSetA = setB.filter(function(n) {
     return setA.indexOf(n) === -1;
   });
-  console.log("So sanh");
-  console.log(intersectionArray.length + " " + intersectionArray1.length);
-  console.log(setB.length + setAminusSetB.length + " " + (setA.length + setBminusSetA.length));
-  console.log(setA.length);
-  console.log(setBminusSetA.length);
+
   var union = ((setB.length + setAminusSetB.length) * 1.0);
   if (union == 0) return 0.0;
   var res = intersectionArray.length * 1.0 / union;
@@ -151,8 +147,7 @@ function updateTopRelatedUsersForAllUsers(callback){
       topRelatedUsers.sort(function(a,b){
         return b.point - a.point;
       })
-      console.log(topRelatedUsers);
-      users[index1].topRelatedUsers = topRelatedUsers.slice(0, 3).map(function(user){
+      users[index1].topRelatedUsers = topRelatedUsers.slice(0, 5).map(function(user){
         return JSON.stringify({id: user.userId, username: user.username});
       });
 

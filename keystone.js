@@ -1,5 +1,6 @@
 // Simulate config options from your production environment by
 // customising the .env file in your project's root folder.
+var getIP = require('external-ip')();
 require('dotenv').load();
 
 // Require keystone
@@ -92,4 +93,14 @@ keystone.set('nav', {
 });
 
 // Start Keystone to connect to your database and initialise the web server
+getIP(function (err, ip) {
+  console.log("find ip");
+  if (err) {
+    // every service in the list has failed 
+    throw err;
+  }
+  process.env.EXTERNAL_IP = ip;
+});
+
 keystone.start();
+

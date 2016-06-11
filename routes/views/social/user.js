@@ -21,11 +21,12 @@ module.exports = {
 
 		//get the user
 		view.on('init',function(next){
-			//console.log(req.params.username);
+			console.log(req.params.username);
 			keystone.list('User').model.findOne({
 				username: req.params.username
 			}).exec(function(err,res_user){
 				locals.data.targetUser=res_user;
+				console.log(res_user);
 				next();
 			});
 		});
@@ -33,7 +34,7 @@ module.exports = {
 		//check if no user and check if friend
 		view.on('init',function(next){
 			if (!locals.data.targetUser)
-				res.redirect('/404-no-user');
+				return res.redirect('/404-no-user');
 			//check if following already
 			if (locals.user) 
 				if ((locals.user.followingPeopleIds.indexOf(locals.data.targetUser._id)>-1)  || locals.user._id.equals(locals.data.targetUser._id) ){

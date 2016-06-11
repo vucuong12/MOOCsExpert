@@ -46,6 +46,7 @@ module.exports = {
       },
       //update postIds in user
       function(myPostId, myPost, callback){
+        console.log(1);
         keystone.list("User").model.findOne({_id: user._id}, function(err, user){
           var currentMyPosts = user.myPosts || [];
           currentMyPosts.push(myPostId);
@@ -57,6 +58,7 @@ module.exports = {
         
       },
       function(myPostId, myPost, callback){
+        console.log(2)
         var query = {
           userId: user._id,
           cid: cid,
@@ -67,37 +69,31 @@ module.exports = {
           currentMyPosts.push(myPostId);
           myCourse.postIds = currentMyPosts;
           myCourse.save(function(err, myCourse){
-            getIP(function (err, ip) {
-              if (err) {
-                // every service in the list has failed 
-                throw err;
-              }
-              console.log(ip);
-              callback(err, myPostId)
-              //Update courseTags and postTags for this new myPost
-              var port = process.env.PORT || "3000";
-              var postUrl = "http://" + ip + ":" + port + "/post?postId=" + myPostId;
-              addMetadataForCourses.getTagsByWaston(postUrl, "url", function(err, tags){
-                removeWord(tags, "all rights reserved");
-                removeWord(tags, "copyright");
-                myPost.postTags = tags;
-                keystone.list("Course").model.findOne({source:myCourse.source, cid: myCourse.cid}, function(err, course){
-                  myPost.courseTags = course.titleTags.concat(course.tags.filter(function(n){
-                    return course.titleTags.indexOf(n) === -1;
-                  }))
-                  myPost.tags = myPost.postTags.concat(myPost.courseTags.filter(function(n){
-                    return myPost.postTags.indexOf(n) === -1;
-                  }));
-                  myPost.save(function(err, newMyPost){
-                    updateRecommendationForUsers.updateOnNewPost(user._id, newMyPost._id, function(err){
-                      console.log("Done updateOnNewPost (2)")
-                    })
+            
+            var ip = process.env.EXTERNAL_IP;
+            console.log(ip);
+            callback(err, myPostId)
+            //Update courseTags and postTags for this new myPost
+            var port = process.env.PORT || "3000";
+            var postUrl = "http://" + ip + ":" + port + "/post?postId=" + myPostId;
+            addMetadataForCourses.getTagsByWaston(postUrl, "url", function(err, tags){
+              removeWord(tags, "all rights reserved");
+              removeWord(tags, "copyright");
+              myPost.postTags = tags;
+              keystone.list("Course").model.findOne({source:myCourse.source, cid: myCourse.cid}, function(err, course){
+                myPost.courseTags = course.titleTags.concat(course.tags.filter(function(n){
+                  return course.titleTags.indexOf(n) === -1;
+                }))
+                myPost.tags = myPost.postTags.concat(myPost.courseTags.filter(function(n){
+                  return myPost.postTags.indexOf(n) === -1;
+                }));
+                myPost.save(function(err, newMyPost){
+                  updateRecommendationForUsers.updateOnNewPost(user._id, newMyPost._id, function(err){
+                    console.log("Done updateOnNewPost (2)")
                   })
                 })
               })
-              
-              
-            });
+            })
             
           })
         });

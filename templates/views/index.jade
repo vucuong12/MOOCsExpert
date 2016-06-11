@@ -36,10 +36,12 @@ mixin displayContent(content)
 						strong= content.title
 			.col-xs-1.no-float
 				.upvote-btn
-					i(class="fa fa-caret-up" style="font-size:40px" onclick="upvote('"+content._id+"')" )
-				.vote-number(style="padding-left:3px" id=content._id+"point")= content.point
+					- content.upvoteUserIds = content.upvoteUserIds || [];
+					- content.downvoteUserIds =  content.downvoteUserIds || [];
+					i(class="fa fa-caret-up", style="font-size:40px;cursor: pointer;" +  ((!user || content.upvoteUserIds.indexOf(user._id) == -1)? "color:black":"color:#00689b"), onclick="upvote('"+content._id+"', this)" )#upvote-icon1
+				.vote-number(style="padding-left:7.5px", id=content._id+"point")= content.point
 				.downvote-btn
-					i(class="fa fa-caret-down" style="font-size:40px" onclick="downvote('"+content._id+"')")
+					i(class="fa fa-caret-down", style="font-size:40px;cursor: pointer;"+((!user || content.downvoteUserIds.indexOf(user._id) == -1)? "color:black":"color:#00689b"),onclick="downvote('"+content._id+"', this)")#downvote-icon1
 			.col-xs-11.no-float!= content.content
 		else
 			center(style="padding-bottom: 20px;")
@@ -70,6 +72,11 @@ block body
 			#center-part.clearfix
 				.service-select.clearfix
 					center
+						if (user)
+							h2 Hello #{user.username}
+						else
+							h2 Hi there
+					center
 						a(href="/index/friends")
 							button.btn.btn-success(style="width: 49.5%") You Friends
 						a(href="/index/discover")
@@ -95,19 +102,25 @@ block body
 								tbody
 									each user in data.mostReputedUsers
 										tr
-											td 
-												strong=user.username
+											td
+												a(href="/user/" + user.username)
+													strong=user.username
 											td 
 												strong=user.totalPoint
-
-					if (recommendedCourses)
-						.recommended-course
-							each recCourse in recommendedCourses
-								a(href="course?source=" + recCourse.source + "&id=" + recCourse.cid)
-									h4= recCourse.title
 					if (relatedUsers && relatedUsers.length > 0)
+						.newline
+						h4.rank-header(style="margin-top: 20px;") Recommended Users
 						.related-users
 							each relatedUser in relatedUsers
 								a(href="/user/" + relatedUser.username)
 									h4= relatedUser.username
+
+					if (recommendedCourses)
+						.newline
+						h4.rank-header(style="margin-top: 20px;") Recommended Courses
+						.recommended-course
+							each recCourse in recommendedCourses
+								a(href="course?source=" + recCourse.source + "&id=" + recCourse.cid)
+									h4= recCourse.title
+					
 
